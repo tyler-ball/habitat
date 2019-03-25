@@ -21,13 +21,15 @@
 //! events.
 
 use super::EventCore;
-use crate::manager::service::{HealthCheck as DomainHealthCheck,
-                              Service,
-                              UpdateStrategy as DomainUpdateStrategy};
-use prost::{Enumeration,
-            Message};
+use crate::manager::service::{
+    HealthCheck as DomainHealthCheck, Service, UpdateStrategy as DomainUpdateStrategy,
+};
+use prost::{Enumeration, Message};
 
-include!(concat!(env!("OUT_DIR"), "/chef.habitat.supervisor.event.rs"));
+include!(concat!(
+    env!("OUT_DIR"),
+    "/chef.habitat.supervisor.event.rs"
+));
 
 // Note: `UpdateStrategy` here is the protobuf-generated type for the
 // event we're sending out; `DomainUpdateStrategy` is the one we use
@@ -59,23 +61,27 @@ impl Into<HealthCheck> for DomainHealthCheck {
 impl Service {
     /// Create a protobuf metadata struct for Service-related event messages.
     pub(super) fn to_service_metadata(&self) -> ServiceMetadata {
-        ServiceMetadata { package_ident:   self.pkg.ident.to_string(),
-                          spec_ident:      self.spec_ident.to_string(),
-                          service_group:   self.service_group.to_string(),
-                          update_channel:  self.channel.to_string(),
-                          update_strategy: self.update_strategy.into(), }
+        ServiceMetadata {
+            package_ident: self.pkg.ident.to_string(),
+            spec_ident: self.spec_ident.to_string(),
+            service_group: self.service_group.to_string(),
+            update_channel: self.channel.to_string(),
+            update_strategy: self.update_strategy.into(),
+        }
     }
 }
 
 impl EventCore {
     /// Create a protobuf metadata struct for all event messages.
     pub(super) fn to_event_metadata(&self) -> EventMetadata {
-        EventMetadata { supervisor_id: self.supervisor_id.clone(),
-                        ip_address:    self.ip_address.to_string(),
-                        application:   self.application.clone(),
-                        environment:   self.environment.clone(),
-                        timestamp:     None,
-                        meta:          self.meta.clone().into(), }
+        EventMetadata {
+            supervisor_id: self.supervisor_id.clone(),
+            ip_address: self.ip_address.to_string(),
+            application: self.application.clone(),
+            environment: self.environment.clone(),
+            timestamp: None,
+            meta: self.meta.clone().into(),
+        }
     }
 }
 

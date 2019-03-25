@@ -99,7 +99,6 @@ impl EventStreamConfig {
                                              .expect("Required option for EventStream feature"),
                                meta:        EventStreamMetadata::from_matches(m)?, })
     }
-}
 
 /// All the information needed to establish a connection to a NATS
 /// Streaming server.
@@ -203,6 +202,46 @@ fn publish(mut event: impl EventMessage) {
                                              ..EVENT_CORE.get::<EventCore>().to_event_metadata() });
 
         e.send(event.to_bytes());
+    }
+}
+
+/// Send an event for the start of a Service.
+pub fn service_started(service: &Service) {
+    if stream_initialized() {
+        publish(ServiceStartedEvent { service_metadata:    Some(service.to_service_metadata()),
+                                      supervisor_metadata: None, });
+    }
+}
+
+/// Send an event for the stop of a Service.
+pub fn service_stopped(service: &Service) {
+    if stream_initialized() {
+        publish(ServiceStoppedEvent { service_metadata:    Some(service.to_service_metadata()),
+                                      supervisor_metadata: None, });
+    }
+}
+
+////////////////////////////////////////////////////////////////////////
+
+/// Internal helper function to know whether or not to go to the trouble of
+/// creating event structures. If the event stream hasn't been
+/// initialized, then we shouldn't need to do anything.
+fn stream_initialized() -> bool { EVENT_STREAM.try_get::<EventStream>().is_some() }
+
+/// Publish an event. This is the main interface that client code will
+/// use.
+///
+/// If `init_stream` has not been called already, this function will
+/// be a no-op.
+fn publish(mut event: impl EventMessage) {
+    // TODO: incorporate the current timestamp into the rendered event
+    // (which will require tweaks to the rendering logic, but we know
+    // that'll need to be updated anyway).
+    if let Some(e) = EVENT_STREAM.try_get::<EventStream>() {
+        event.supervisor_metadata(EVENT_CORE.get::<EventCore>().to_supervisor_metadata());
+        if let Ok(bytes) = event.to_bytes() {
+            e.send(bytes);
+        }
     }
 }
 

@@ -2,14 +2,13 @@
 include!("../libbuild.rs");
 
 use prost_build;
-use std::{env,
-          fs::File,
-          io::{self,
-               Write},
-          path::{Path,
-                 PathBuf},
-          process::{Command,
-                    ExitStatus}};
+use std::{
+    env,
+    fs::File,
+    io::{self, Write},
+    path::{Path, PathBuf},
+    process::{Command, ExitStatus},
+};
 
 fn main() {
     habitat::common();
@@ -50,6 +49,8 @@ fn raml2html_cmd(dst: PathBuf, src: PathBuf) -> io::Result<ExitStatus> {
 
 fn generate_event_protobufs() {
     let mut config = prost_build::Config::new();
-    config.compile_protos(&["protocols/event.proto"], &["protocols/"])
-          .unwrap()
+    config.type_attribute(".", "#[derive(Serialize, Deserialize)]");
+    config
+        .compile_protos(&["protocols/event.proto"], &["protocols/"])
+        .unwrap()
 }
