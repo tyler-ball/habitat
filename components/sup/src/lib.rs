@@ -56,7 +56,6 @@ extern crate palaver;
 #[macro_use]
 extern crate prometheus;
 extern crate prost;
-extern crate protobuf;
 extern crate rand;
 extern crate regex;
 extern crate rustls;
