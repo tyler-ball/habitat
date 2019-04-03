@@ -109,6 +109,7 @@ pub struct EventConnectionInfo {
     pub verbose:     bool,
     pub cluster_uri: String,
     pub cluster_id:  String,
+    pub auth_token:  String,
 }
 
 /// A collection of data that will be present in all events. Rather
@@ -269,7 +270,7 @@ const HABITAT_SUBJECT: &str = "habitat";
 // TODO: As we become clear on the interaction between Habitat and A2,
 // this implementation *may* disappear. It's useful for testing and
 // prototyping, though.
-impl Default for EventConnectionInfo {
+/* impl Default for EventConnectionInfo {
     fn default() -> Self {
         EventConnectionInfo { name:        String::from("habitat"),
                               verbose:     true,
@@ -277,7 +278,7 @@ impl Default for EventConnectionInfo {
                               cluster_id:  String::from("test-cluster"), }
     }
 }
-
+ */
 fn init_nats_stream(conn_info: EventConnectionInfo) -> Result<EventStream> {
     // TODO (CM): Investigate back-pressure scenarios
     let (event_tx, event_rx) = futures_mpsc::unbounded();
@@ -292,7 +293,8 @@ fn init_nats_stream(conn_info: EventConnectionInfo) -> Result<EventStream> {
                               let EventConnectionInfo { name,
                                                         verbose,
                                                         cluster_uri,
-                                                        cluster_id, } = conn_info;
+                                                        cluster_id,
+                                                        auth_token, } = conn_info;
 
                               let cc = ConnectCommand::builder()
                 // .user(Some("nats".to_string()))
@@ -301,6 +303,7 @@ fn init_nats_stream(conn_info: EventConnectionInfo) -> Result<EventStream> {
                 .verbose(verbose)
                 .build()
                 .unwrap();
+                              cc::auth_token(auth_token);
                               let opts =
                                   NatsClientOptions::builder().connect_command(cc)
                                                               .cluster_uri(cluster_uri.as_str())
