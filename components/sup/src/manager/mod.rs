@@ -527,7 +527,7 @@ impl Manager {
             verbose: true,
             cluster_uri: String::from("127.0.0.1:4223"),
             cluster_id: String::from("test-cluster"),
-            auth_token: msg_auth_token.as_string(),
+            auth_token: msg_auth_token,
         }
     }
 
