@@ -525,8 +525,8 @@ impl Manager {
         EventConnectionInfo {
             name: String::from("habitat"),
             verbose: true,
-            cluster_uri: String::from("127.0.0.1:4223"),
-            cluster_id: String::from("test-cluster"),
+            cluster_uri: String::from("10.0.0.174:4222"),
+            cluster_id: String::from("event-service"),
             auth_token: msg_auth_token,
         }
     }

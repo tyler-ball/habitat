@@ -208,52 +208,6 @@ fn publish(mut event: impl EventMessage) {
     }
 }
 
-/// Send an event for the start of a Service.
-pub fn service_started(service: &Service) {
-    if stream_initialized() {
-        publish(ServiceStartedEvent {
-            service_metadata: Some(service.to_service_metadata()),
-            supervisor_metadata: None,
-        });
-    }
-}
-
-/// Send an event for the stop of a Service.
-pub fn service_stopped(service: &Service) {
-    if stream_initialized() {
-        publish(ServiceStoppedEvent {
-            service_metadata: Some(service.to_service_metadata()),
-            supervisor_metadata: None,
-        });
-    }
-}
-
-////////////////////////////////////////////////////////////////////////
-
-/// Internal helper function to know whether or not to go to the trouble of
-/// creating event structures. If the event stream hasn't been
-/// initialized, then we shouldn't need to do anything.
-fn stream_initialized() -> bool {
-    EVENT_STREAM.try_get::<EventStream>().is_some()
-}
-
-/// Publish an event. This is the main interface that client code will
-/// use.
-///
-/// If `init_stream` has not been called already, this function will
-/// be a no-op.
-fn publish(mut event: impl EventMessage) {
-    // TODO: incorporate the current timestamp into the rendered event
-    // (which will require tweaks to the rendering logic, but we know
-    // that'll need to be updated anyway).
-    if let Some(e) = EVENT_STREAM.try_get::<EventStream>() {
-        event.supervisor_metadata(EVENT_CORE.get::<EventCore>().to_supervisor_metadata());
-        if let Ok(bytes) = event.to_bytes() {
-            e.send(bytes);
-        }
-    }
-}
-
 /// A lightweight handle for the event stream. All events get to the
 /// event stream through this.
 struct EventStream(UnboundedSender<Vec<u8>>);
@@ -278,15 +232,19 @@ const HABITAT_SUBJECT: &str = "habitat";
 // TODO: As we become clear on the interaction between Habitat and A2,
 // this implementation *may* disappear. It's useful for testing and
 // prototyping, though.
-/* impl Default for EventConnectionInfo {
+impl Default for EventConnectionInfo {
     fn default() -> Self {
-        EventConnectionInfo { name:        String::from("habitat"),
-                              verbose:     true,
-                              cluster_uri: String::from("127.0.0.1:4223"),
-                              cluster_id:  String::from("test-cluster"), }
+        EventConnectionInfo {
+            name: String::from("habitat"),
+            verbose: true,
+            cluster_uri: String::from("127.0.0.1:4223"),
+            cluster_id: String::from("test-cluster"),
+            // DON'T LEAVE THIS ADMIN TOKEN IN HERE!
+            auth_token: AutomateAuthToken("D6fHxsfc_FlGG4coaZXdNv-vSUM=".to_string()),
+        }
     }
 }
- */
+
 fn init_nats_stream(conn_info: EventConnectionInfo) -> Result<EventStream> {
     // TODO (CM): Investigate back-pressure scenarios
     let (event_tx, event_rx) = futures_mpsc::unbounded();
@@ -313,6 +271,7 @@ fn init_nats_stream(conn_info: EventConnectionInfo) -> Result<EventStream> {
                 .name(Some(name))
                 .verbose(verbose)
                 .auth_token(Some(auth_token.as_str().to_string()))
+                .tls_required(false)
                 .build()
                 .unwrap();
             let opts = NatsClientOptions::builder()
@@ -322,7 +281,11 @@ fn init_nats_stream(conn_info: EventConnectionInfo) -> Result<EventStream> {
                 .unwrap();
 
             let publisher = NatsClient::from_options(opts)
-                .map_err(Into::<NatsStreamingError>::into)
+                .map_err(|e| {
+                    error!("Error creating Nats Client from options: {}", e);
+                    //Into::<NatsStreamingError>::into(e)
+                    e.into()
+                })
                 .and_then(|client| {
                     NatsStreamingClient::from(client)
                         .cluster_id(cluster_id)
