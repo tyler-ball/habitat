@@ -28,7 +28,8 @@ use habitat_common::{cli::{BINLINK_DIR_ENVVAR,
                            RING_KEY_ENVVAR,
                            SHUTDOWN_SIGNAL_DEFAULT,
                            SHUTDOWN_TIMEOUT_DEFAULT},
-                     types::{EventStreamMetadata,
+                     types::{AutomateAuthToken,
+                             EventStreamMetadata,
                              ListenCtlAddr},
                      FeatureFlag};
 use habitat_core::{crypto::{keys::PairType,
@@ -1210,6 +1211,14 @@ fn maybe_add_event_stream_options(mut app: App<'static, 'static>,
                                                                 .required(true)
                                                                 .takes_value(true)
                                                                 .validator(non_empty));
+        app = app.arg(Arg::with_name(AutomateAuthToken::ARG_NAME).help("An authentication token for \
+                                                                 streaming events to an \
+                                                                 Automate server.")
+                                                          .long("event-stream-token")
+                                                          .required(true)
+                                                          .takes_value(true)
+                                                          .validator(AutomateAuthToken::validate)
+                                                          .env(AutomateAuthToken::ENVVAR));
         app =
             app.arg(Arg::with_name(EventStreamMetadata::ARG_NAME).help("An arbitrary key-value pair \
                                                                   to add to each event \
@@ -1461,7 +1470,7 @@ mod tests {
         }
 
         #[test]
-        fn run_requries_app_and_env() {
+        fn run_requries_app_and_env_and_token() {
             let matches = sub_sup_run(event_stream_enabled()).get_matches_from_safe(vec!["run"]);
             assert!(matches.is_err());
             assert_eq!(matches.unwrap_err().kind,
@@ -1473,18 +1482,22 @@ mod tests {
                 "MY_APP",
                 "--event-stream-environment",
                 "MY_ENV",
+                "--event-stream-token",
+                "MY_TOKEN",
             ]);
             assert!(matches.is_ok());
         }
 
         #[test]
-        fn app_and_env_options_require_event_stream_feature() {
+        fn app_and_env_and_token_options_require_event_stream_feature() {
             let matches = sub_sup_run(no_feature_flags()).get_matches_from_safe(vec![
                 "run",
                 "--event-stream-application",
                 "MY_APP",
                 "--event-stream-environment",
                 "MY_ENV",
+                "--event-stream-token",
+                "MY_TOKEN",
             ]);
             assert!(matches.is_err());
             let error = matches.unwrap_err();
@@ -1500,6 +1513,8 @@ mod tests {
                 "--event-stream-application",
                 "--event-stream-environment",
                 "MY_ENV",
+                "--event-stream-token",
+                "MY_TOKEN",
             ]);
             assert!(matches.is_err());
             let error = matches.unwrap_err();
@@ -1516,6 +1531,8 @@ mod tests {
                 "",
                 "--event-stream-environment",
                 "MY_ENV",
+                "--event-stream-token",
+                "MY_TOKEN",
             ]);
             assert!(matches.is_err());
             let error = matches.unwrap_err();
@@ -1529,6 +1546,8 @@ mod tests {
                 "--event-stream-application",
                 "MY_APP",
                 "--event-stream-environment",
+                "--event-stream-token",
+                "MY_TOKEN",
             ]);
             assert!(matches.is_err());
             let error = matches.unwrap_err();
@@ -1545,6 +1564,8 @@ mod tests {
                 "MY_APP",
                 "--event-stream-environment",
                 "",
+                "--event-stream-token",
+                "MY_TOKEN",
             ]);
             assert!(matches.is_err());
             let error = matches.unwrap_err();
@@ -1559,6 +1580,8 @@ mod tests {
                 "foo=bar",
                 "--event-stream-application",
                 "MY_APP",
+                "--event-stream-token",
+                "MY_TOKEN",
                 "--event-stream-environment",
                 "MY_ENV",
             ]);
@@ -1582,6 +1605,8 @@ mod tests {
                 "MY_APP",
                 "--event-stream-environment",
                 "MY_ENV",
+                "--event-stream-token",
+                "MY_TOKEN",
             ]);
             assert!(matches.is_ok());
             let matches = matches.unwrap();
@@ -1600,6 +1625,8 @@ mod tests {
                 "MY_APP",
                 "--event-stream-environment",
                 "MY_ENV",
+                "--event-stream-token",
+                "MY_TOKEN",
             ]);
             assert!(matches.is_err());
             assert_eq!(matches.unwrap_err().kind, clap::ErrorKind::EmptyValue);
@@ -1615,6 +1642,8 @@ mod tests {
                 "MY_APP",
                 "--event-stream-environment",
                 "MY_ENV",
+                "--event-stream-token",
+                "MY_TOKEN",
             ]);
             assert!(matches.is_err());
             assert_eq!(matches.unwrap_err().kind, clap::ErrorKind::ValueValidation);
@@ -1630,6 +1659,8 @@ mod tests {
                 "MY_APP",
                 "--event-stream-environment",
                 "MY_ENV",
+                "--event-stream-token",
+                "MY_TOKEN",
             ]);
             assert!(matches.is_err());
             assert_eq!(matches.unwrap_err().kind, clap::ErrorKind::ValueValidation);
@@ -1645,9 +1676,44 @@ mod tests {
                 "MY_APP",
                 "--event-stream-environment",
                 "MY_ENV",
+                "--event-stream-token",
+                "MY_TOKEN",
             ]);
             assert!(matches.is_err());
             assert_eq!(matches.unwrap_err().kind, clap::ErrorKind::ValueValidation);
+        }
+
+        #[test]
+        fn token_option_must_take_a_value() {
+            let matches = sub_sup_run(event_stream_enabled()).get_matches_from_safe(vec![
+                "run",
+                "--event-stream-application",
+                "MY_APP",
+                "--event-stream-environment",
+                "MY_ENV",
+                "--event-stream-token",
+            ]);
+            assert!(matches.is_err());
+            let error = matches.unwrap_err();
+            assert_eq!(error.kind, clap::ErrorKind::EmptyValue);
+            assert_eq!(error.info,
+                       Some(vec![AutomateAuthToken::ARG_NAME.to_string()]));
+        }
+
+        #[test]
+        fn token_option_cannot_be_empty() {
+            let matches = sub_sup_run(event_stream_enabled()).get_matches_from_safe(vec![
+                "run",
+                "--event-stream-application",
+                "MY_APP",
+                "--event-stream-environment",
+                "MY_ENV",
+                "--event-stream-token",
+                "",
+            ]);
+            assert!(matches.is_err());
+            let error = matches.unwrap_err();
+            assert_eq!(error.kind, clap::ErrorKind::ValueValidation);
         }
 
     }
