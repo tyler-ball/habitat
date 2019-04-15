@@ -1,15 +1,15 @@
-[hab]
-plan_path = "components/hab"
-paths = [
-  "components/builder-api-client/*",
-  "components/builder-depot-client/*",
-  "components/common/*",
-  "components/sup-client/*",
-  "components/sup-protocol/*",
-]
+# [hab]
+# plan_path = "components/hab"
+# paths = [
+#   "components/builder-api-client/*",
+#   "components/builder-depot-client/*",
+#   "components/common/*",
+#   "components/sup-client/*",
+#   "components/sup-protocol/*",
+# ]
 
-# [hab-backline]
-# plan_path = "components/backline"
+[hab-backline]
+plan_path = "components/backline"
 
 # [hab-bintray-publish]
 # plan_path = "components/bintray-publish"
