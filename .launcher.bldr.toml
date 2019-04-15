@@ -1,0 +1,7 @@
+[hab-launcher]
+plan_path = "components/launcher/habitat"
+paths = [
+  "components/launcher/*",
+  "components/launcher-protocol/*",
+  "support/ci/builder-base-plan.sh",
+]
