@@ -1,4 +1,3 @@
-# shellcheck disable=2034
 pkg_name=hab-plan-build
 pkg_origin=core
 pkg_version=$(cat "$SRC_PATH/../../VERSION")
