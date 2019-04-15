@@ -8,8 +8,8 @@
 #   "components/sup-protocol/*",
 # ]
 
-[hab-backline]
-plan_path = "components/backline"
+# [hab-backline]
+# plan_path = "components/backline"
 
 # [hab-bintray-publish]
 # plan_path = "components/bintray-publish"
@@ -33,8 +33,8 @@ plan_path = "components/backline"
 #   "support/ci/builder-base-plan.sh",
 # ]
 
-# [hab-plan-build]
-# plan_path = "components/plan-build"
+[hab-plan-build]
+plan_path = "components/plan-build"
 
 # [hab-studio]
 # plan_path = "components/studio"
