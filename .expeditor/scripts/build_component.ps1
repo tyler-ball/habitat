@@ -16,11 +16,15 @@ if($Component.Equals("")) {
     Write-Error "--- :error: Component to build not specified, please use the -Component flag"
 }
 
-hab origin key download $Env:HAB_ORIGIN
-hab origin key download --auth $Env:SCOTTHAIN_HAB_AUTH_TOKEN --secret $Env:HAB_ORIGIN
-hab pkg build "components/${Component}"
+ls
 
+pwd
 
+# hab origin key download $Env:HAB_ORIGIN
+# hab origin key download --auth $Env:SCOTTHAIN_HAB_AUTH_TOKEN --secret $Env:HAB_ORIGIN
+# hab pkg build "components/${Component}"
+
+exit $LASTEXITCODE
 
 # # install buildkite agent because we are in a container :(
 # Write-Host "--- Installing buildkite agent in container"
