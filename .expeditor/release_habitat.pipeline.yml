@@ -10,7 +10,7 @@ steps:
 
   - label: "hab"
     command:
-      - ./expeditor/scripts/build_component.sh hab
+      - .expeditor/scripts/build_component.sh hab
     agents:
       queue: 'default-privileged'
     env:
@@ -22,7 +22,7 @@ steps:
 
   - label: "plan-build"
     command:
-      - ./expeditor/scripts/build_component.sh plan-build
+      - .expeditor/scripts/build_component.sh plan-build
     agents:
       queue: 'default-privileged'
     env:
