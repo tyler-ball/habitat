@@ -16,6 +16,8 @@ if($Component.Equals("")) {
     Write-Error "--- :error: Component to build not specified, please use the -Component flag"
 }
 
+$Env:HAB_BLDR_CHANNEL=$Env:BUILDKITE_JOB_ID
+
 hab origin key download $Env:HAB_ORIGIN
 hab origin key download --auth $Env:SCOTTHAIN_HAB_AUTH_TOKEN --secret $Env:HAB_ORIGIN
 hab pkg build "components\${Component}"
