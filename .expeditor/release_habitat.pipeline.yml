@@ -10,7 +10,7 @@ steps:
 
   - label: "hab"
     command:
-      - cd components/hab && hab pkg build .
+      - hab pkg build components/hab
     agents:
       queue: 'default-privileged'
     # timeout_in_minutes: 10
@@ -20,7 +20,7 @@ steps:
 
   - label: "plan-build"
     command:
-      - cd components/plan-build && hab pkg build .
+      - cd hab pkg build components/plan-build
     agents:
       queue: 'default-privileged'
     # timeout_in_minutes: 10
