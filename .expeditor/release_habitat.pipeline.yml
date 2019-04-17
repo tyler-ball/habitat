@@ -38,7 +38,7 @@ steps:
 
   - label: "plan-build"
     command:
-      - .expeditor/scripts/build_component.ps1 -Component plan-build
+      - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
     agents:
       queue: 'default-windows-privileged'
     env:
