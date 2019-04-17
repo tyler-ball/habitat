@@ -10,32 +10,20 @@ steps:
 
   - label: "hab"
     command:
-      - cd components/hab && sudo hab pkg build .
+      - cd components/hab && hab pkg build .
     agents:
       queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+    # timeout_in_minutes: 10
+    # retry:
+    #   automatic:
+    #     limit: 1
 
   - label: "plan-build"
     command:
-      - cd components/plan-build && sudo hab pkg build .
+      - cd components/plan-build && hab pkg build .
     agents:
       queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+    # timeout_in_minutes: 10
+    # retry:
+    #   automatic:
+    #     limit: 1
