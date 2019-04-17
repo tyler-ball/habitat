@@ -10,13 +10,11 @@ steps:
 
   - label: "hab"
     command:
-      - hab origin key generate scotthain
-      - hab pkg build components/hab
+      - ./expeditor/scripts/build_component.sh hab
     agents:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-
     # timeout_in_minutes: 10
     # retry:
     #   automatic:
@@ -24,8 +22,7 @@ steps:
 
   - label: "plan-build"
     command:
-      - hab origin key generate scotthain
-      - cd hab pkg build components/plan-build
+      - ./expeditor/scripts/build_component.sh plan-build
     agents:
       queue: 'default-privileged'
     env:
