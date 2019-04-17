@@ -15,6 +15,8 @@ hab origin key download $HAB_ORIGIN
 hab origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 hab pkg build "components/${component}"
 
+cat results/last_build.env
+
 # source .buildkite/scripts/shared.sh
 
 

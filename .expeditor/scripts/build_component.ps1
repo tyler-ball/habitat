@@ -20,6 +20,8 @@ hab origin key download $Env:HAB_ORIGIN
 hab origin key download --auth $Env:SCOTTHAIN_HAB_AUTH_TOKEN --secret $Env:HAB_ORIGIN
 hab pkg build "components\${Component}"
 
+cat results\last_build.ps1
+
 exit $LASTEXITCODE
 
 # # install buildkite agent because we are in a container :(
