@@ -156,6 +156,10 @@ pub struct Service {
     // *also* storing the health check result directly (see
     // manager::GatewayState#health_check_data), but because of how
     // the data is currently rendered, this is a little complicated.
+    //
+    // In order to access this field in an asynchronous health check
+    // hook, we need to wrap some Arc<Mutex<_>> protection around it
+    // :(
     health_check_result: Arc<Mutex<HealthCheck>>,
     last_election_status: ElectionStatus,
     needs_reload: bool,
@@ -227,7 +231,7 @@ impl Service {
                      bldr_url: spec.bldr_url,
                      channel: spec.channel,
                      desired_state: spec.desired_state,
-                     health_check_result: HealthCheck::default(),
+                     health_check_result: Arc::new(Mutex::new(HealthCheck::default())),
                      hooks: HookTable::load(&pkg.name,
                                             &hooks_root,
                                             svc_hooks_path(&service_group.service())),
@@ -986,7 +990,10 @@ impl Service {
                    self.spec_ident, check_result);
             self.schedule_special_health_check();
         }
-        self.health_check_result = check_result;
+        *self.health_check_result
+             .lock()
+             .expect("Could not unlock health_check_result") = check_result;
+
         self.cache_health_check(check_result);
     }
 
