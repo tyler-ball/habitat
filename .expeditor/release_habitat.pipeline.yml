@@ -46,10 +46,6 @@ steps:
 
   # - wait
 
-# Second pass now that those are built!
-
-  - wait
-
 # hab
 
   - label: "hab"
@@ -69,6 +65,10 @@ steps:
   #     HAB_ORIGIN: "scotthain"
 
   # - wait
+
+# Second pass now that those are built!
+
+  - wait
 
 # backline
 
