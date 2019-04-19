@@ -716,7 +716,7 @@ _resolve_dependency() {
     warn "Origin required for '$dep' in plan '$pkg_origin/$pkg_name' (example: acme/$dep)"
     return 1
   fi
-return 1
+
   if dep_path=$(_latest_installed_package "$dep"); then
     echo "${dep_path}"
     return 0
@@ -948,6 +948,8 @@ _determine_hab_bin() {
   if [[ -n "${NO_INSTALL_DEPS:-}" ]]; then
     build_line "NO_INSTALL_DEPS set: no package dependencies will be installed"
   fi
+
+exit 1
 
   if [[ -n "${HAB_BIN:-}" ]]; then
     HAB_BIN=$HAB_BIN

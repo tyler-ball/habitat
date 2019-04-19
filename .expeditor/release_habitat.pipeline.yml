@@ -28,10 +28,6 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
-# Second pass now that we have plan-build!
-
-  - wait
-
   - label: "studio"
     command:
       - .expeditor/scripts/build_component.sh studio
@@ -43,6 +39,30 @@ steps:
   # - label: "plan-build"
   #   command:
   #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
+  #   agents:
+  #     queue: 'default-windows-privileged'
+  #   env:
+  #     HAB_ORIGIN: "scotthain"
+
+  # - wait
+
+# Second pass now that those are built!
+
+  - wait
+
+# hab
+
+  - label: "hab"
+    command:
+      - .expeditor/scripts/build_component.sh hab
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
+
+  # - label: "hab"
+  #   command:
+  #     - .expeditor/scripts/build_component.ps1 -Component hab
   #   agents:
   #     queue: 'default-windows-privileged'
   #   env:
@@ -63,26 +83,6 @@ steps:
   # - label: "plan-build"
   #   command:
   #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
-  #   agents:
-  #     queue: 'default-windows-privileged'
-  #   env:
-  #     HAB_ORIGIN: "scotthain"
-
-  # - wait
-
-# hab
-
-  - label: "hab"
-    command:
-      - .expeditor/scripts/build_component.sh hab
-    agents:
-      queue: 'default-privileged'
-    env:
-      HAB_ORIGIN: "scotthain"
-
-  # - label: "hab"
-  #   command:
-  #     - .expeditor/scripts/build_component.ps1 -Component hab
   #   agents:
   #     queue: 'default-windows-privileged'
   #   env:
