@@ -10,7 +10,7 @@ hab origin key download $HAB_ORIGIN
 hab origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 
 echo "--- Installing update hab binary from $HAB_BLDR_CHANNEL"
-hab pkg install scotthain/hab
+sudo hab pkg install scotthain/hab
 hab_binary_version=$(hab pkg path scotthain/hab)
 
 echo "--- Using $hab_binary_version"
