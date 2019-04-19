@@ -16,7 +16,8 @@ component=${1}
 hab_binary="$(hab pkg path scotthain/hab)/bin/hab"
 hab_binary_version=$($hab_binary --version)
 
-export HAB_BIN=$hab_binary
+# export HAB_BIN=$hab_binary
+export HAB_BIN=hab
 
 echo "--- Running a build $HAB_ORIGIN / $component / $HAB_BLDR_CHANNEL"
 $hab_binary origin key download $HAB_ORIGIN
