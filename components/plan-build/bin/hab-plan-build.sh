@@ -716,7 +716,7 @@ _resolve_dependency() {
     warn "Origin required for '$dep' in plan '$pkg_origin/$pkg_name' (example: acme/$dep)"
     return 1
   fi
-
+return 1
   if dep_path=$(_latest_installed_package "$dep"); then
     echo "${dep_path}"
     return 0

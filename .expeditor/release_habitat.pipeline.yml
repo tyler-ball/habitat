@@ -28,6 +28,8 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
+# Second pass now that we have plan-build!
+
   - wait
 
   - label: "studio"
@@ -90,7 +92,7 @@ steps:
 
   - wait
 
-# Second pass builds against NEW things in serial
+# Third pass builds against NEW things in serial
 
 # plan-build
 
