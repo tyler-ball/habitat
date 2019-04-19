@@ -14,13 +14,13 @@ steps:
 
 # hab
 
-  # - label: "hab"
-  #   command:
-  #     - .expeditor/scripts/build_component.sh hab
-  #   agents:
-  #     queue: 'default-privileged'
-  #   env:
-  #     HAB_ORIGIN: "scotthain"
+  - label: "hab"
+    command:
+      - .expeditor/scripts/build_component.sh hab
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
 
   # - label: "hab"
   #   command:
@@ -30,7 +30,7 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
-  # - wait
+  - wait
 
 # plan-build
 
