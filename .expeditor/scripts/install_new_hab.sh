@@ -11,10 +11,12 @@ hab origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 
 echo "--- Installing update hab binary from $HAB_BLDR_CHANNEL"
 sudo hab pkg install --channel $BUILDKITE_BUILD_ID scotthain/hab
-hab_binary_version=$(hab pkg path scotthain/hab)
+hab_binary="$(hab pkg path scotthain/hab)/bin/hab"
+hab_binary_version=$($hab_binary --version)
+
+export HAB_BIN=$hab_binary
 
 echo "--- Using $hab_binary_version"
-
 
 # . results/last_build.env
 
