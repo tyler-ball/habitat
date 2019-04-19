@@ -36,7 +36,7 @@ steps:
 
   - label: "plan-build"
     command:
-      - .expeditor/scripts/install_new_hab.sh
+      # - .expeditor/scripts/install_new_hab.sh
       - .expeditor/scripts/build_component.sh plan-build
     agents:
       queue: 'default-privileged'
@@ -53,7 +53,7 @@ steps:
 
   - label: "studio"
     command:
-      - .expeditor/scripts/install_new_hab.sh
+      # - .expeditor/scripts/install_new_hab.sh
       - .expeditor/scripts/build_component.sh studio
     agents:
       queue: 'default-privileged'
