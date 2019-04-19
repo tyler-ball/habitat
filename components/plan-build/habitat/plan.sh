@@ -15,7 +15,7 @@ pkg_deps=(core/bash
           core/gawk
           core/grep
           core/gzip
-          core/hab
+          scotthain/hab
           core/rq
           core/sed
           core/tar

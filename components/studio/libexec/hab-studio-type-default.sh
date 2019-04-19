@@ -107,7 +107,7 @@ finish_setup() {
   $bb mkdir -p $v "$HAB_STUDIO_ROOT""$HAB_ROOT_PATH"/bin
 
   # Put `hab` on the default `$PATH`
-  _hab pkg binlink --dest "$HAB_ROOT_PATH"/bin core/hab hab
+  _hab pkg binlink --dest "$HAB_ROOT_PATH"/bin scotthain/hab hab
 
   # Create `/bin/{sh,bash}` for software that hardcodes these shells
   _hab pkg binlink core/bash bash
@@ -120,7 +120,7 @@ finish_setup() {
   # `$PATH` is concerned.
   $bb cat <<EOF > "$HAB_STUDIO_ROOT""$HAB_ROOT_PATH"/bin/build
 #!$bash_path/bin/sh
-exec $HAB_ROOT_PATH/bin/hab pkg exec core/hab-plan-build hab-plan-build "\$@"
+exec $HAB_ROOT_PATH/bin/hab pkg exec scotthain/hab-plan-build hab-plan-build "\$@"
 EOF
   # shellcheck disable=2086
   $bb chmod $v 755 "$HAB_STUDIO_ROOT""$HAB_ROOT_PATH"/bin/build
