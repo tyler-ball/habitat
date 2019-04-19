@@ -4,13 +4,13 @@ set -euo pipefail
 
 # Install the new hab binary from our existing hab
 
-export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
+export BUILD_CHANNEL="5cdb129d-b87b-40ec-a69f-ae4fa9b54e7c" #$BUILDKITE_BUILD_ID
 
 hab origin key download $HAB_ORIGIN
 hab origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 
-echo "--- Installing update hab binary from $HAB_BLDR_CHANNEL"
-sudo hab pkg install --channel $BUILDKITE_BUILD_ID scotthain/hab
+echo "--- Installing updated hab binary from $BUILD_CHANNEL"
+sudo hab pkg install --channel $BUILD_CHANNEL scotthain/hab/0.80.0
 hab_binary="$(hab pkg path scotthain/hab)/bin/hab"
 hab_binary_version=$($hab_binary --version)
 
