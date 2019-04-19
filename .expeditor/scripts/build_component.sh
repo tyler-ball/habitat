@@ -12,16 +12,20 @@ component=${1}
 
 export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 
-hab_binary_version=$(hab --version)
+# Set up our hab, it'll fail back to default installed if it doesn't exist
+hab_binary="$(hab pkg path scotthain/hab)/bin/hab"
+hab_binary_version=$($hab_binary --version)
+
+export HAB_BIN=$hab_binary
 
 echo "--- Running a build $HAB_ORIGIN / $component / $HAB_BLDR_CHANNEL"
-hab origin key download $HAB_ORIGIN
-hab origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
+$hab_binary origin key download $HAB_ORIGIN
+$hab_binary origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 echo "--- Using $hab_binary_version"
-hab pkg build "components/${component}"
+$hab_binary pkg build "components/${component}"
 . results/last_build.env
 
-hab pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $HAB_BLDR_CHANNEL "results/$pkg_artifact"
+$hab_binary pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $HAB_BLDR_CHANNEL "results/$pkg_artifact"
 
 # source .buildkite/scripts/shared.sh
 
