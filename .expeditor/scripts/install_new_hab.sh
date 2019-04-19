@@ -5,6 +5,7 @@ set -euo pipefail
 # Install the new hab binary from our existing hab
 
 export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
+export HAB_INTERNAL_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 
 hab origin key download $HAB_ORIGIN
 hab origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
