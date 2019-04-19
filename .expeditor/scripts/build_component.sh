@@ -14,8 +14,6 @@ export HAB_BLDR_CHANNEL=$BUILDKITE_JOB_ID
 
 echo "--- Running a build $HAB_ORIGIN / $component"
 
-# Get what we can from our bldr channel
-
 hab origin key download $HAB_ORIGIN
 hab origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 hab pkg build "components/${component}"
