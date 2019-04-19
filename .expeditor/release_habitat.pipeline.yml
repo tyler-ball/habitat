@@ -92,7 +92,7 @@ steps:
 
   - wait
 
-# Third pass builds against NEW things in serial
+# Third pass builds against NEW things
 
 # plan-build
 
@@ -134,27 +134,6 @@ steps:
 
   # - wait
 
-# backline
-
-  - label: "backline"
-    command:
-      - .expeditor/scripts/build_component.sh backline
-    agents:
-      queue: 'default-privileged'
-    env:
-      HAB_ORIGIN: "scotthain"
-      HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
-
-  # - label: "plan-build"
-  #   command:
-  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
-  #   agents:
-  #     queue: 'default-windows-privileged'
-  #   env:
-  #     HAB_ORIGIN: "scotthain"
-
-  # - wait
-
 # hab
 
   - label: "hab"
@@ -174,4 +153,23 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
-  # - wait
+  - wait
+
+# backline
+
+  - label: "backline"
+    command:
+      - .expeditor/scripts/build_component.sh backline
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
+      HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
+
+  # - label: "plan-build"
+  #   command:
+  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
+  #   agents:
+  #     queue: 'default-windows-privileged'
+  #   env:
+  #     HAB_ORIGIN: "scotthain"

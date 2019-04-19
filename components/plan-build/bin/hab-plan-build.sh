@@ -949,8 +949,6 @@ _determine_hab_bin() {
     build_line "NO_INSTALL_DEPS set: no package dependencies will be installed"
   fi
 
-exit 1
-
   if [[ -n "${HAB_BIN:-}" ]]; then
     HAB_BIN=$HAB_BIN
   else
