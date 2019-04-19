@@ -8,6 +8,8 @@ steps:
 # Release!
 #######################################################################
 
+# First pass builds against the old habitat packages.
+
 # plan-build
 
   - label: "plan-build"
@@ -26,7 +28,7 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
-  - wait
+  # - wait
 
   - label: "studio"
     command:
@@ -44,7 +46,7 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
-  - wait
+  # - wait
 
 # backline
 
@@ -64,7 +66,7 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
-  - wait
+  # - wait
 
 # hab
 
@@ -84,5 +86,90 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
+  # - wait
+
   - wait
 
+# Second pass builds against NEW things in serial
+
+# plan-build
+
+  - label: "plan-build"
+    command:
+      - .expeditor/scripts/build_component.sh plan-build
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
+      USE_INTERNAL_BLDR_CHANNEL: "true"
+
+  # - label: "plan-build"
+  #   command:
+  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
+  #   agents:
+  #     queue: 'default-windows-privileged'
+  #   env:
+  #     HAB_ORIGIN: "scotthain"
+
+  # - wait
+
+  - label: "studio"
+    command:
+      - .expeditor/scripts/build_component.sh studio
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
+      USE_INTERNAL_BLDR_CHANNEL: "true"
+
+  # - label: "plan-build"
+  #   command:
+  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
+  #   agents:
+  #     queue: 'default-windows-privileged'
+  #   env:
+  #     HAB_ORIGIN: "scotthain"
+
+  # - wait
+
+# backline
+
+  - label: "backline"
+    command:
+      - .expeditor/scripts/build_component.sh backline
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
+      USE_INTERNAL_BLDR_CHANNEL: "true"
+
+  # - label: "plan-build"
+  #   command:
+  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
+  #   agents:
+  #     queue: 'default-windows-privileged'
+  #   env:
+  #     HAB_ORIGIN: "scotthain"
+
+  # - wait
+
+# hab
+
+  - label: "hab"
+    command:
+      - .expeditor/scripts/build_component.sh hab
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
+      USE_INTERNAL_BLDR_CHANNEL: "true"
+
+  # - label: "hab"
+  #   command:
+  #     - .expeditor/scripts/build_component.ps1 -Component hab
+  #   agents:
+  #     queue: 'default-windows-privileged'
+  #   env:
+  #     HAB_ORIGIN: "scotthain"
+
+  # - wait
