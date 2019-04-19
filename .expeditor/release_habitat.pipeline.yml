@@ -21,7 +21,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-
+      HAB_BLDR_CHANNEL: "unstable"
   # - label: "hab"
   #   command:
   #     - .expeditor/scripts/build_component.ps1 -Component hab
