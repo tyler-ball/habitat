@@ -26,7 +26,7 @@ $hab_binary pkg build "components/${component}"
 . results/last_build.env
 
 # Always upload to the pipeline job ID channel.
-$hab_binary pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $BUILD_CHANNEL "results/$pkg_artifact"
+$hab_binary pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $BUILDKITE_BUILD_ID "results/$pkg_artifact"
 
 # source .buildkite/scripts/shared.sh
 
