@@ -66,6 +66,7 @@ steps:
 
   # - wait
 
+#################################################################
 # Second pass now that those are built!
 
   - wait
@@ -92,12 +93,14 @@ steps:
 
   - wait
 
+#################################################################
 # Third pass builds against NEW things
 
 # plan-build
 
   - label: "plan-build"
     command:
+      - .expeditor/scripts/install_new_hab.sh
       - .expeditor/scripts/build_component.sh plan-build
     agents:
       queue: 'default-privileged'
@@ -117,6 +120,7 @@ steps:
 
   - label: "studio"
     command:
+      - .expeditor/scripts/install_new_hab.sh
       - .expeditor/scripts/build_component.sh studio
     agents:
       queue: 'default-privileged'
@@ -138,6 +142,7 @@ steps:
 
   - label: "hab"
     command:
+      - .expeditor/scripts/install_new_hab.sh
       - .expeditor/scripts/build_component.sh hab
     agents:
       queue: 'default-privileged'
@@ -159,6 +164,7 @@ steps:
 
   - label: "backline"
     command:
+      - .expeditor/scripts/install_new_hab.sh
       - .expeditor/scripts/build_component.sh backline
     agents:
       queue: 'default-privileged'

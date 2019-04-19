@@ -2,26 +2,23 @@
 
 set -euo pipefail
 
-########################################################################
-# `component` should be the subdirectory name in `components` where a
-# particular component code resides.
-#
-# e.g. `hab` for `core/hab`, `plan-build` for `core/plan-build`,
-# etc.
-component=${1}
+# Install the new hab binary from our existing hab
 
 export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 
-hab_binary_version=$(hab --version)
-
-echo "--- Running a build $HAB_ORIGIN / $component / $HAB_BLDR_CHANNEL"
 hab origin key download $HAB_ORIGIN
 hab origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
-echo "--- Using $hab_binary_version"
-hab pkg build "components/${component}"
-. results/last_build.env
 
-hab pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $HAB_BLDR_CHANNEL "results/$pkg_artifact"
+echo "--- Installing update hab binary from $HAB_BLDR_CHANNEL"
+hab pkg install scotthain/hab
+hab_binary_version=$(hab pkg path scotthain/hab)
+
+echo "--- Using $hab_binary_version"
+
+
+# . results/last_build.env
+
+# hab pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $HAB_BLDR_CHANNEL "results/$pkg_artifact"
 
 # source .buildkite/scripts/shared.sh
 
