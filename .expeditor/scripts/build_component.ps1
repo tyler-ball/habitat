@@ -25,8 +25,6 @@ hab pkg build "components\${Component}"
 
 hab pkg upload --auth $Env:SCOTTHAIN_HAB_AUTH_TOKEN --channel $Env:HAB_BLDR_CHANNEL "results\$pkg_artifact"
 
-cat results\last_build.ps1
-
 exit $LASTEXITCODE
 
 # # install buildkite agent because we are in a container :(

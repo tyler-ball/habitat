@@ -12,15 +12,16 @@ component=${1}
 
 export HAB_BLDR_CHANNEL=$BUILDKITE_JOB_ID
 
-echo "--- yay doing things with $HAB_ORIGIN / $component"
+echo "--- Running a build $HAB_ORIGIN / $component"
+
+# Get what we can from our bldr channel
+
 hab origin key download $HAB_ORIGIN
 hab origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 hab pkg build "components/${component}"
 . results/last_build.env
 
 hab pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $HAB_BLDR_CHANNEL "results/$pkg_artifact"
-
-cat results/last_build.env
 
 # source .buildkite/scripts/shared.sh
 
