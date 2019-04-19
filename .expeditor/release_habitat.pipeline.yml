@@ -26,7 +26,7 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
-- wait
+  - wait
 
 # backline
 
@@ -46,7 +46,7 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
-- wait
+  - wait
 
 # hab
 
