@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{api_client::Client,
+use crate::{api_client::{self,
+                         Client},
             common::ui::{Status,
                          UIWriter,
                          UI}};
+use hyper::status::StatusCode;
 
 use crate::{error::{Error,
                     Result},
@@ -27,8 +29,19 @@ pub fn start(ui: &mut UI, bldr_url: &str, token: &str, origin: &str) -> Result<(
 
     ui.status(Status::Deleting, format!("origin {}.", origin))?;
 
-    api_client.delete_origin(origin, token)
-              .map_err(Error::APIClient)?;
+    match api_client.delete_origin(origin, token) {
+        Ok(_) => (),
+        Err(api_client::Error::APIError(StatusCode::Conflict, msg)) => {
+            println!("Unable to delete origin {}", origin);
+            println!("Origins may only be deleted if they have no packages, linked projects");
+            println!("or other dependencies. Please check your origin and try again.");
+            return Err(Error::APIClient(api_client::Error::APIError(StatusCode::Conflict, msg)));
+        }
+        Err(e) => {
+            debug!("Failed to delete origin {}, {:?}", origin, e);
+            return Err(Error::from(e));
+        }
+    }
 
     ui.status(Status::Deleted, format!("origin {}.", origin))
       .map_err(Into::into)
