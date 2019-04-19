@@ -28,7 +28,7 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
-  # - wait
+  - wait
 
   - label: "studio"
     command:
