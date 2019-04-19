@@ -18,7 +18,7 @@ hab_binary_version=$($hab_binary --version)
 
 export HAB_BIN=$hab_binary
 
-echo "--- Running a build $HAB_ORIGIN / $component / ${HAB_BLDR_CHANNEL:?}"
+echo "--- Running a build $HAB_ORIGIN / $component / ${HAB_BLDR_CHANNEL:-}"
 $hab_binary origin key download $HAB_ORIGIN
 $hab_binary origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 echo "--- Using $hab_binary_version"
