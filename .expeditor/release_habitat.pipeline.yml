@@ -10,21 +10,21 @@ steps:
 
 # hab
 
-  # - label: "hab"
-  #   command:
-  #     - .expeditor/scripts/build_component.sh hab
-  #   agents:
-  #     queue: 'default-privileged'
-  #   env:
-  #     HAB_ORIGIN: "scotthain"
+  - label: "hab"
+    command:
+      - .expeditor/scripts/build_component.sh hab
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
 
-  # - label: "hab"
-  #   command:
-  #     - .expeditor/scripts/build_component.ps1 -Component hab
-  #   agents:
-  #     queue: 'default-windows-privileged'
-  #   env:
-  #     HAB_ORIGIN: "scotthain"
+  - label: "hab"
+    command:
+      - .expeditor/scripts/build_component.ps1 -Component hab
+    agents:
+      queue: 'default-windows-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
 
 # plan-build
 
@@ -36,10 +36,10 @@ steps:
     env:
       HAB_ORIGIN: "scotthain"
 
-  # - label: "plan-build"
-  #   command:
-  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
-  #   agents:
-  #     queue: 'default-windows-privileged'
-  #   env:
-  #     HAB_ORIGIN: "scotthain"
+  - label: "plan-build"
+    command:
+      - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
+    agents:
+      queue: 'default-windows-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"

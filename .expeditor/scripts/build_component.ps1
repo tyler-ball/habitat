@@ -22,6 +22,8 @@ hab origin key download $Env:HAB_ORIGIN
 hab origin key download --auth $Env:SCOTTHAIN_HAB_AUTH_TOKEN --secret $Env:HAB_ORIGIN
 hab pkg build "components\${Component}"
 
+hab pkg upload --auth $Env:SCOTTHAIN_HAB_AUTH_TOKEN --channel $Env:HAB_BLDR_CHANNEL "results\$Env:pkg_artifact"
+
 cat results\last_build.ps1
 
 exit $LASTEXITCODE
