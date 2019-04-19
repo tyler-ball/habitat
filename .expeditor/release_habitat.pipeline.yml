@@ -8,43 +8,9 @@ steps:
 # Release!
 #######################################################################
 
-# First pass builds against the old habitat packages.
 
-# plan-build
-
-  - label: "plan-build"
-    command:
-      - .expeditor/scripts/build_component.sh plan-build
-    agents:
-      queue: 'default-privileged'
-    env:
-      HAB_ORIGIN: "scotthain"
-
-  # - label: "plan-build"
-  #   command:
-  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
-  #   agents:
-  #     queue: 'default-windows-privileged'
-  #   env:
-  #     HAB_ORIGIN: "scotthain"
-
-  - label: "studio"
-    command:
-      - .expeditor/scripts/build_component.sh studio
-    agents:
-      queue: 'default-privileged'
-    env:
-      HAB_ORIGIN: "scotthain"
-
-  # - label: "plan-build"
-  #   command:
-  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
-  #   agents:
-  #     queue: 'default-windows-privileged'
-  #   env:
-  #     HAB_ORIGIN: "scotthain"
-
-  # - wait
+###########################################################
+# First pass hab, built against the old habitat packages.
 
 # hab
 
@@ -64,6 +30,47 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
+- wait
+
+# plan-build
+
+  - label: "plan-build"
+    command:
+      - .expeditor/scripts/install_new_hab.sh
+      - .expeditor/scripts/build_component.sh plan-build
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
+
+  # - label: "plan-build"
+  #   command:
+  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
+  #   agents:
+  #     queue: 'default-windows-privileged'
+  #   env:
+  #     HAB_ORIGIN: "scotthain"
+
+  - label: "studio"
+    command:
+      - .expeditor/scripts/install_new_hab.sh
+      - .expeditor/scripts/build_component.sh studio
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
+
+  # - label: "plan-build"
+  #   command:
+  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
+  #   agents:
+  #     queue: 'default-windows-privileged'
+  #   env:
+  #     HAB_ORIGIN: "scotthain"
+
+  # - wait
+
+
   # - wait
 
 #################################################################
@@ -75,6 +82,7 @@ steps:
 
   - label: "backline"
     command:
+      - .expeditor/scripts/install_new_hab.sh
       - .expeditor/scripts/build_component.sh backline
     agents:
       queue: 'default-privileged'
@@ -96,6 +104,28 @@ steps:
 #################################################################
 # Third pass builds against NEW things
 
+# hab
+
+  - label: "hab"
+    command:
+      - .expeditor/scripts/install_new_hab.sh
+      - .expeditor/scripts/build_component.sh hab
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
+      HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
+
+  # - label: "hab"
+  #   command:
+  #     - .expeditor/scripts/build_component.ps1 -Component hab
+  #   agents:
+  #     queue: 'default-windows-privileged'
+  #   env:
+  #     HAB_ORIGIN: "scotthain"
+
+  - wait
+
 # plan-build
 
   - label: "plan-build"
@@ -138,27 +168,6 @@ steps:
 
   # - wait
 
-# hab
-
-  - label: "hab"
-    command:
-      - .expeditor/scripts/install_new_hab.sh
-      - .expeditor/scripts/build_component.sh hab
-    agents:
-      queue: 'default-privileged'
-    env:
-      HAB_ORIGIN: "scotthain"
-      HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
-
-  # - label: "hab"
-  #   command:
-  #     - .expeditor/scripts/build_component.ps1 -Component hab
-  #   agents:
-  #     queue: 'default-windows-privileged'
-  #   env:
-  #     HAB_ORIGIN: "scotthain"
-
-  - wait
 
 # backline
 
