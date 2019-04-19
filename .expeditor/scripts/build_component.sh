@@ -13,7 +13,7 @@ component=${1}
 # export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 
 # Set up our hab, it'll fail back to default installed if it doesn't exist
-hab_binary="$(hab pkg path scotthain/hab)/bin/hab"
+hab_binary=hab #"$(hab pkg path scotthain/hab)/bin/hab"
 hab_binary_version=$($hab_binary --version)
 
 # export HAB_BIN=$hab_binary
