@@ -1,6 +1,6 @@
 # shellcheck disable=2034
 pkg_name=hab-plan-build
-pkg_origin=core
+pkg_origin=scotthain
 pkg_version=$(cat "$SRC_PATH/../../VERSION")
 pkg_maintainer="The Habitat Maintainers <humans@habitat.sh>"
 pkg_license=('Apache-2.0')
