@@ -10,9 +10,9 @@ set -euo pipefail
 # etc.
 component=${1}
 
-export HAB_BLDR_CHANNEL=$BUILDKITE_JOB_ID
+export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 
-echo "--- Running a build $HAB_ORIGIN / $component"
+echo "--- Running a build $HAB_ORIGIN / $component / $HAB_BLDR_CHANNEL"
 
 hab origin key download $HAB_ORIGIN
 hab origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
