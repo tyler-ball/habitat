@@ -13,13 +13,12 @@ component=${1}
 # export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 
 # Set up our hab, it'll fail back to default installed if it doesn't exist
-hab_binary=hab #"$(hab pkg path scotthain/hab)/bin/hab"
+hab_binary="$(hab pkg path scotthain/hab)/bin/hab"
 hab_binary_version=$($hab_binary --version)
 
-# export HAB_BIN=$hab_binary
-export HAB_BIN=hab
+export HAB_BIN=$hab_binary
 
-echo "--- Running a build $HAB_ORIGIN / $component " #/ $HAB_BLDR_CHANNEL"
+echo "--- Running a build $HAB_ORIGIN / $component / $HAB_BLDR_CHANNEL"
 $hab_binary origin key download $HAB_ORIGIN
 $hab_binary origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 echo "--- Using $hab_binary_version"
