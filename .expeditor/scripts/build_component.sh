@@ -10,7 +10,7 @@ set -euo pipefail
 # etc.
 component=${1}
 
-export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
+# export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 
 # Set up our hab, it'll fail back to default installed if it doesn't exist
 hab_binary="$(hab pkg path scotthain/hab)/bin/hab"
@@ -25,7 +25,8 @@ echo "--- Using $hab_binary_version"
 $hab_binary pkg build "components/${component}"
 . results/last_build.env
 
-$hab_binary pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $HAB_BLDR_CHANNEL "results/$pkg_artifact"
+# Always upload to the pipeline job ID channel.
+$hab_binary pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $BUILDKITE_BUILD_ID "results/$pkg_artifact"
 
 # source .buildkite/scripts/shared.sh
 

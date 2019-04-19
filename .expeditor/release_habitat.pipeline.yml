@@ -42,7 +42,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-
+      HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
   # - label: "plan-build"
   #   command:
   #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
@@ -59,6 +59,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
+      HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
 
   # - label: "plan-build"
   #   command:
@@ -88,6 +89,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
+      HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
 
   # - label: "plan-build"
   #   command:
@@ -114,6 +116,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
+      HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
       HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
 
   # - label: "hab"
@@ -136,6 +139,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
+      HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
       HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
 
   # - label: "plan-build"
@@ -156,6 +160,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
+      HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
       HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
 
   # - label: "plan-build"
@@ -179,6 +184,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
+      HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
       HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
 
   # - label: "plan-build"
