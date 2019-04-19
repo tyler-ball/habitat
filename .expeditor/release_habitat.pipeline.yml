@@ -28,9 +28,27 @@ steps:
 
   - wait
 
+  - label: "studio"
+    command:
+      - .expeditor/scripts/build_component.sh studio
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
+
+  # - label: "plan-build"
+  #   command:
+  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
+  #   agents:
+  #     queue: 'default-windows-privileged'
+  #   env:
+  #     HAB_ORIGIN: "scotthain"
+
+  - wait
+
 # backline
 
-  - label: "plan-build"
+  - label: "backline"
     command:
       - .expeditor/scripts/build_component.sh backline
     agents:

@@ -1,5 +1,5 @@
 $pkg_name="hab-studio"
-$pkg_origin="core"
+$pkg_origin="scotthain"
 $pkg_version=Get-Content "$PLAN_CONTEXT/../../../VERSION"
 $pkg_maintainer="The Habitat Maintainers <humans@habitat.sh>"
 $pkg_license=@("Apache-2.0")

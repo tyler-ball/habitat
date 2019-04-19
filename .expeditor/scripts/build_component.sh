@@ -11,6 +11,7 @@ set -euo pipefail
 component=${1}
 
 export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
+export HAB_INTERNAL_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 
 echo "--- Running a build $HAB_ORIGIN / $component / $HAB_BLDR_CHANNEL"
 
