@@ -12,11 +12,6 @@ component=${1}
 
 export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 
-if [ -z "$USE_INTERNAL_BLDR_CHANNEL" ]; then
-    export HAB_INTERNAL_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
-fi  
-
-
 echo "--- Running a build $HAB_ORIGIN / $component / $HAB_BLDR_CHANNEL"
 
 hab origin key download $HAB_ORIGIN

@@ -101,7 +101,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-      USE_INTERNAL_BLDR_CHANNEL: "true"
+      HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
 
   # - label: "plan-build"
   #   command:
@@ -120,7 +120,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-      USE_INTERNAL_BLDR_CHANNEL: "true"
+      HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
 
   # - label: "plan-build"
   #   command:
@@ -141,7 +141,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-      USE_INTERNAL_BLDR_CHANNEL: "true"
+      HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
 
   # - label: "plan-build"
   #   command:
@@ -162,7 +162,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-      USE_INTERNAL_BLDR_CHANNEL: "true"
+      HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
 
   # - label: "hab"
   #   command:
