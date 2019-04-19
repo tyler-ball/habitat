@@ -23,7 +23,7 @@ hab origin key download --auth $Env:SCOTTHAIN_HAB_AUTH_TOKEN --secret $Env:HAB_O
 hab pkg build "components\${Component}"
 . results\last_build.ps1
 
-hab pkg upload --auth $Env:SCOTTHAIN_HAB_AUTH_TOKEN --channel $Env:HAB_BLDR_CHANNEL "results\$Env:pkg_artifact"
+hab pkg upload --auth $Env:SCOTTHAIN_HAB_AUTH_TOKEN --channel $Env:HAB_BLDR_CHANNEL "results\$pkg_artifact"
 
 cat results\last_build.ps1
 
