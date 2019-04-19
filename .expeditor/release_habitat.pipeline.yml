@@ -30,7 +30,7 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
-- wait
+  - wait
 
 # plan-build
 
