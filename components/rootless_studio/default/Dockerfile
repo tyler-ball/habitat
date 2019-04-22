@@ -2,7 +2,7 @@ ARG PACKAGE_TARGET
 FROM habitat-${PACKAGE_TARGET}:hab-base as hab
 ENV PATH=${PATH}:/hab/bin
 ARG BLDR_CHANNEL=stable
-RUN hab pkg install -c ${BLDR_CHANNEL} core/hab-backline \
+RUN hab pkg install -c ${BLDR_CHANNEL} scotthain/hab-backline \
   && hab pkg binlink core/bash -d /hab/bin \
   && hab pkg binlink core/hab -d /hab/bin
 
