@@ -23,6 +23,17 @@ steps:
     env:
       HAB_ORIGIN: "scotthain"
       # HAB_FEAT_IGNORE_LOCAL: "true"
+# backline
+
+  - label: "backline"
+    command:
+      - .expeditor/scripts/install_hab.sh stable
+      - .expeditor/scripts/build_component.sh backline
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
+      # HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
 
   - wait
 
@@ -36,17 +47,6 @@ steps:
       HAB_ORIGIN: "scotthain"
       # HAB_FEAT_IGNORE_LOCAL: "true"
 
-# backline
-
-  - label: "backline"
-    command:
-      - .expeditor/scripts/install_hab.sh stable
-      - .expeditor/scripts/build_component.sh backline
-    agents:
-      queue: 'default-privileged'
-    env:
-      HAB_ORIGIN: "scotthain"
-      # HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
 
   # - label: "hab"
   #   command:
