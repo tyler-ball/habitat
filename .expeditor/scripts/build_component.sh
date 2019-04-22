@@ -15,7 +15,7 @@ component=${1}
 
 destination_channel=$BUILDKITE_BUILD_ID
 
-hab_bin_path=$(hab pkg path core/hab)
+hab_bin_path=$(hab pkg path scotthain/hab)
 hab_binary="$hab_bin_path/bin/hab"
 hab_binary_version=$($hab_binary --version)
 
