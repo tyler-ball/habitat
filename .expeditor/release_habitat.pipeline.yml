@@ -27,7 +27,7 @@ steps:
 
   - label: "backline"
     command:
-      - .expeditor/scripts/install_hab.sh stable
+      # - .expeditor/scripts/install_hab.sh stable
       - .expeditor/scripts/build_component.sh backline
     agents:
       queue: 'default-privileged'
