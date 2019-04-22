@@ -16,13 +16,22 @@ steps:
 
   - label: "hab"
     command:
-      - .expeditor/scripts/install_new_hab.sh
+      - .expeditor/scripts/install_new_hab.sh stable
       # - .expeditor/scripts/build_base_component.sh hab
     agents:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
       # HAB_BLDR_CHANNEL: "unstable"
+
+  - label: "hab2"
+    command:
+      - .expeditor/scripts/install_new_hab.sh ${BUILDKITE_BUILD_ID}
+      # - .expeditor/scripts/build_base_component.sh hab
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
 
   # - label: "hab"
   #   command:
