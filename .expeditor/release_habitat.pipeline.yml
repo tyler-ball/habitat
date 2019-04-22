@@ -33,7 +33,7 @@ steps:
   - label: "plan-build"
     command:
       - .expeditor/scripts/install_hab.sh stable
-      - .expeditor/scripts/build_base_component.sh plan-build
+      - .expeditor/scripts/build_component.sh plan-build
     agents:
       queue: 'default-privileged'
     env:
@@ -42,7 +42,7 @@ steps:
   - label: "studio"
     command:
       - .expeditor/scripts/install_hab.sh stable
-      - .expeditor/scripts/build_base_component.sh studio
+      - .expeditor/scripts/build_component.sh studio
     agents:
       queue: 'default-privileged'
     env:

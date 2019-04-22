@@ -61,7 +61,7 @@ use tempfile::TempDir;
 // the future for use with further exporters.
 // https://github.com/habitat-sh/habitat/issues/4522
 
-const DEFAULT_HAB_IDENT: &str = "core/hab";
+const DEFAULT_HAB_IDENT: &str = "scotthain/hab";
 const DEFAULT_LAUNCHER_IDENT: &str = "core/hab-launcher";
 const DEFAULT_SUP_IDENT: &str = "core/hab-sup";
 const DEFAULT_USER_AND_GROUP_ID: u32 = 42;

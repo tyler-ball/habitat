@@ -34,7 +34,7 @@ try {
     # install from its stable channel
     if(!$InstallHarts) {
         $InstallHarts = @(
-            "core/hab-studio",
+            "scotthain/hab-studio",
             "core/hab-sup",
             "core/windows-service"
         )
@@ -45,9 +45,9 @@ try {
             Write-Error "hab install failed for $_, aborting"
         }
     }
-    $studioPath = hab pkg path core/hab-studio
+    $studioPath = hab pkg path scotthain/hab-studio
     if ($LASTEXITCODE -ne 0) {
-      Write-Error "core/hab-studio must be installed, aborting"
+      Write-Error "scotthain/hab-studio must be installed, aborting"
     }
     
     info "Purging container hab cache"

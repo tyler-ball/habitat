@@ -20,7 +20,7 @@ use crate::error::Result;
 
 pub const SUP_CMD: &str = "hab-sup";
 pub const SUP_CMD_ENVVAR: &str = "HAB_SUP_BINARY";
-pub const SUP_PKG_IDENT: &str = "core/hab-sup";
+pub const SUP_PKG_IDENT: &str = "scotthain/hab-sup";
 
 pub fn start(ui: &mut UI, args: &[OsString]) -> Result<()> { inner::start(ui, args) }
 

@@ -11,7 +11,7 @@ studio_build_command=
 studio_run_environment=
 studio_run_command=
 
-base_pkgs="core/hab core/hab-sup"
+base_pkgs="scotthain/hab core/hab-sup"
 : "${PKGS:=}"
 
 run_user="hab"
@@ -44,7 +44,7 @@ finish_setup() {
   done
 
   local hab_path
-  hab_path=$(_pkgpath_for core/hab)
+  hab_path=$(_pkgpath_for scotthain/hab)
   local sup_path
   sup_path=$(_pkgpath_for core/hab-sup)
   local busybox_path
@@ -83,7 +83,7 @@ finish_setup() {
   $bb mkdir -p $v "$HAB_STUDIO_ROOT""$HAB_ROOT_PATH"/bin
 
   # Put `hab` on the default `$PATH`
-  _hab pkg binlink --dest "$HAB_ROOT_PATH"/bin core/hab hab
+  _hab pkg binlink --dest "$HAB_ROOT_PATH"/bin scotthain/hab hab
 
   # Create `/bin/{sh,bash}` for software that hardcodes these shells
   _hab pkg binlink --dest=/bin core/busybox-static bash

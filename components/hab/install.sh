@@ -290,7 +290,7 @@ install_hab() {
       install -v "${archive_dir}"/hab /usr/local/bin/hab
       ;;
     linux)
-      local _ident="core/hab"
+      local _ident="scotthain/hab"
       if [ -n "${version-}" ]; then
         _ident+="/$version";
       fi
