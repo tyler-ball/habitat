@@ -33,7 +33,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-      HAB_STUDIO_BACKLINE_PKG: "core/backline"
+      HAB_STUDIO_BACKLINE_PKG: "core/hab-backline"
       # HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
 
   - wait
