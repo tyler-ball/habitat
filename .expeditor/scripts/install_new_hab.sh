@@ -2,15 +2,16 @@
 
 set -euo pipefail
 
-# Install the new hab binary from our existing hab
+# install hab from source channel
+source_channel=${1}
 
-export BUILD_CHANNEL=$BUILDKITE_BUILD_ID
+# export BUILD_CHANNEL=$BUILDKITE_BUILD_ID
 
 hab origin key download $HAB_ORIGIN
 hab origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 
-echo "--- Installing updated hab binary from $BUILD_CHANNEL"
-sudo hab pkg install --channel $BUILD_CHANNEL scotthain/hab
+echo "--- Installing updated hab binary from $source_channel"
+sudo hab pkg install --channel $source_channel scotthain/hab
 hab_binary="$(hab pkg path scotthain/hab)/bin/hab"
 hab_binary_version=$($hab_binary --version)
 
