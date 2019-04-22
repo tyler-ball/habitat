@@ -16,6 +16,8 @@
 
 #[macro_use]
 extern crate clap;
+#[cfg(unix)]
+extern crate jemallocator;
 #[macro_use]
 extern crate lazy_static;
 #[macro_use]
@@ -58,7 +60,6 @@ use crate::{common::{cli::{cache_key_path_from_matches,
                        types::*},
             sup_client::{SrvClient,
                          SrvClientError}};
-
 use clap::{ArgMatches,
            Shell};
 use env_logger;
@@ -118,6 +119,10 @@ lazy_static! {
              "group",]
     };
 }
+
+#[cfg(unix)]
+#[global_allocator]
+static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
 fn main() {
     env_logger::init();
