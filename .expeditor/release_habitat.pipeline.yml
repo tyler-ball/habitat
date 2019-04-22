@@ -22,6 +22,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
+      NO_INSTALL_DEPS: "true"
       # HAB_BLDR_CHANNEL: "unstable"
 
   - label: "hab2"
@@ -32,6 +33,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
+      NO_INSTALL_DEPS: "true"
 
   # - label: "hab"
   #   command:
