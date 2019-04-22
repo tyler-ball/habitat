@@ -13,7 +13,15 @@ component=${1}
 # export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 export BUILD_CHANNEL=$BUILDKITE_BUILD_ID
 
-hab_binary="$(hab pkg path scotthain/hab)/bin/hab)"
+echo "--- We are in build component now"
+
+# hab_binary="$(hab pkg path scotthain/hab)/bin/hab)"
+
+hab_bin_path=$(hab pkg path scotthain/hab)
+ls -la $hab_bin_path
+hab_binary="$hab_bin_path/bin/hab"
+ls -la $hab_binary
+
 hab_binary_version=$($hab_binary --version)
 
 export HAB_BIN=$hab_binary
