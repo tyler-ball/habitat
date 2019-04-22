@@ -12,10 +12,10 @@ hab origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 
 echo "--- Installing updated hab binary from $source_channel"
 sudo hab pkg install --channel $source_channel --force scotthain/hab
-hab_binary="$(hab pkg path scotthain/hab)/bin/hab"
-hab_binary_version=$($hab_binary --version)
+# hab_binary="$(hab pkg path scotthain/hab)/bin/hab"
+# hab_binary_version=$($hab_binary --version)
 
-echo "--- Using $hab_binary_version"
+# echo "--- Using $(hab pkg path scotthain/hab)/bin/hab"
 
 # . results/last_build.env
 

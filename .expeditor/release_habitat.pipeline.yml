@@ -22,7 +22,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-      HAB_FEAT_IGNORE_LOCAL: "true"
+      # HAB_FEAT_IGNORE_LOCAL: "true"
 
   - wait
 
@@ -34,7 +34,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-      HAB_FEAT_IGNORE_LOCAL: "true"
+      # HAB_FEAT_IGNORE_LOCAL: "true"
 
   # - label: "hab"
   #   command:
