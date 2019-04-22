@@ -21,7 +21,7 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-      HAB_BLDR_CHANNEL: "unstable"
+      # HAB_BLDR_CHANNEL: "unstable"
 
   # - label: "hab"
   #   command:
@@ -31,7 +31,7 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
-  - wait
+  # - wait
 
 # plan-build
 
@@ -78,13 +78,13 @@ steps:
 #################################################################
 # Second pass now that those are built!
 
-  - wait
+  # - wait
 
 # backline
 
   - label: "backline"
     command:
-      - .expeditor/scripts/install_new_hab.sh
+      # - .expeditor/scripts/install_new_hab.sh
       - .expeditor/scripts/build_component.sh backline
     agents:
       queue: 'default-privileged'
@@ -128,70 +128,70 @@ steps:
   #   env:
   #     HAB_ORIGIN: "scotthain"
 
-  - wait
+#   - wait
 
-# plan-build
+# # plan-build
 
-  - label: "plan-build"
-    command:
-      - .expeditor/scripts/install_new_hab.sh
-      - .expeditor/scripts/build_component.sh plan-build
-    agents:
-      queue: 'default-privileged'
-    env:
-      HAB_ORIGIN: "scotthain"
-      HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
-      HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
+#   - label: "plan-build"
+#     command:
+#       - .expeditor/scripts/install_new_hab.sh
+#       - .expeditor/scripts/build_component.sh plan-build
+#     agents:
+#       queue: 'default-privileged'
+#     env:
+#       HAB_ORIGIN: "scotthain"
+#       HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
+#       HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
 
-  # - label: "plan-build"
-  #   command:
-  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
-  #   agents:
-  #     queue: 'default-windows-privileged'
-  #   env:
-  #     HAB_ORIGIN: "scotthain"
+#   # - label: "plan-build"
+#   #   command:
+#   #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
+#   #   agents:
+#   #     queue: 'default-windows-privileged'
+#   #   env:
+#   #     HAB_ORIGIN: "scotthain"
 
-  # - wait
+#   # - wait
 
-  - label: "studio"
-    command:
-      - .expeditor/scripts/install_new_hab.sh
-      - .expeditor/scripts/build_component.sh studio
-    agents:
-      queue: 'default-privileged'
-    env:
-      HAB_ORIGIN: "scotthain"
-      HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
-      HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
+#   - label: "studio"
+#     command:
+#       - .expeditor/scripts/install_new_hab.sh
+#       - .expeditor/scripts/build_component.sh studio
+#     agents:
+#       queue: 'default-privileged'
+#     env:
+#       HAB_ORIGIN: "scotthain"
+#       HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
+#       HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
 
-  # - label: "plan-build"
-  #   command:
-  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
-  #   agents:
-  #     queue: 'default-windows-privileged'
-  #   env:
-  #     HAB_ORIGIN: "scotthain"
+#   # - label: "plan-build"
+#   #   command:
+#   #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
+#   #   agents:
+#   #     queue: 'default-windows-privileged'
+#   #   env:
+#   #     HAB_ORIGIN: "scotthain"
 
-  # - wait
+#   # - wait
 
 
-# backline
+# # backline
 
-  - label: "backline"
-    command:
-      - .expeditor/scripts/install_new_hab.sh
-      - .expeditor/scripts/build_component.sh backline
-    agents:
-      queue: 'default-privileged'
-    env:
-      HAB_ORIGIN: "scotthain"
-      HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
-      HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
+#   - label: "backline"
+#     command:
+#       - .expeditor/scripts/install_new_hab.sh
+#       - .expeditor/scripts/build_component.sh backline
+#     agents:
+#       queue: 'default-privileged'
+#     env:
+#       HAB_ORIGIN: "scotthain"
+#       HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
+#       HAB_INTERNAL_BLDR_CHANNEL: "${BUILDKITE_BUILD_ID}"
 
-  # - label: "plan-build"
-  #   command:
-  #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
-  #   agents:
-  #     queue: 'default-windows-privileged'
-  #   env:
-  #     HAB_ORIGIN: "scotthain"
+#   # - label: "plan-build"
+#   #   command:
+#   #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
+#   #   agents:
+#   #     queue: 'default-windows-privileged'
+#   #   env:
+#   #     HAB_ORIGIN: "scotthain"
