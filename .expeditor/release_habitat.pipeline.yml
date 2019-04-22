@@ -12,8 +12,6 @@ steps:
 ###########################################################
 # First pass hab, built against the old habitat packages.
 
-# hab
-
   - label: "hab"
     command:
       - .expeditor/scripts/install_hab.sh stable
@@ -22,84 +20,33 @@ steps:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-      # HAB_FEAT_IGNORE_LOCAL: "true"
-# backline
 
   - label: "backline"
     command:
-      # - .expeditor/scripts/install_hab.sh stable
+      - .expeditor/scripts/install_hab.sh stable
       - .expeditor/scripts/build_component.sh backline
     agents:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-      HAB_STUDIO_BACKLINE_PKG: "core/hab-backline"
-      # HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
 
-  - wait
-
-  - label: "hab2"
+  - label: "plan-build"
     command:
-      - .expeditor/scripts/install_hab.sh ${BUILDKITE_BUILD_ID}
-      # - .expeditor/scripts/build_base_component.sh hab
+      - .expeditor/scripts/install_hab.sh stable
+      - .expeditor/scripts/build_base_component.sh plan-build
     agents:
       queue: 'default-privileged'
     env:
       HAB_ORIGIN: "scotthain"
-      # HAB_FEAT_IGNORE_LOCAL: "true"
 
-
-  # - label: "hab"
-  #   command:
-  #     - .expeditor/scripts/build_component.ps1 -Component hab
-  #   agents:
-  #     queue: 'default-windows-privileged'
-  #   env:
-  #     HAB_ORIGIN: "scotthain"
-
-#   # - wait
-
-# # plan-build
-
-#   - label: "plan-build"
-#     command:
-#       # - .expeditor/scripts/install_new_hab.sh
-#       - .expeditor/scripts/build_base_component.sh plan-build
-#     agents:
-#       queue: 'default-privileged'
-#     env:
-#       HAB_ORIGIN: "scotthain"
-#       # HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
-#   # - label: "plan-build"
-#   #   command:
-#   #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
-#   #   agents:
-#   #     queue: 'default-windows-privileged'
-#   #   env:
-#   #     HAB_ORIGIN: "scotthain"
-
-#   - label: "studio"
-#     command:
-#       # - .expeditor/scripts/install_new_hab.sh
-#       - .expeditor/scripts/build_base_component.sh studio
-#     agents:
-#       queue: 'default-privileged'
-#     env:
-#       HAB_ORIGIN: "scotthain"
-#       # HAB_BLDR_CHANNEL: ${BUILDKITE_BUILD_ID}
-
-#   # - label: "plan-build"
-#   #   command:
-#   #     - .expeditor/scripts/build_component.ps1 -Component plan-build-ps1
-#   #   agents:
-#   #     queue: 'default-windows-privileged'
-#   #   env:
-#   #     HAB_ORIGIN: "scotthain"
-
-#   # - wait
-
-
-#   # - wait
+  - label: "studio"
+    command:
+      - .expeditor/scripts/install_hab.sh stable
+      - .expeditor/scripts/build_base_component.sh studio
+    agents:
+      queue: 'default-privileged'
+    env:
+      HAB_ORIGIN: "scotthain"
 
 # #################################################################
 # # Second pass now that those are built!

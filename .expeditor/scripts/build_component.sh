@@ -11,9 +11,11 @@ set -euo pipefail
 component=${1}
 
 # export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
-export BUILD_CHANNEL=$BUILDKITE_BUILD_ID
+# export BUILD_CHANNEL=$BUILDKITE_BUILD_ID
 
-hab_bin_path=$(hab pkg path scotthain/hab)
+destination_channel=$BUILDKITE_BUILD_ID
+
+hab_bin_path=$(hab pkg path core/hab)
 hab_binary="$hab_bin_path/bin/hab"
 hab_binary_version=$($hab_binary --version)
 
@@ -21,7 +23,7 @@ echo "--- Using habitat version $hab_binary_version"
 
 export HAB_BIN=$hab_binary
 
-echo "--- Running a build $HAB_ORIGIN / $component / ${BUILD_CHANNEL:-}"
+echo "--- Running a build $HAB_ORIGIN / $component / ${destination_channel:-}"
 $hab_binary origin key download $HAB_ORIGIN
 $hab_binary origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 
@@ -29,8 +31,8 @@ echo "--- Using $hab_binary_version"
 $hab_binary pkg build "components/${component}"
 . results/last_build.env
 
-# Always upload to the pipeline job ID channel.
-$hab_binary pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $BUILDKITE_BUILD_ID "results/$pkg_artifact"
+# Always upload to the destination channel.
+$hab_binary pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $destination_channel "results/$pkg_artifact"
 
 # source .buildkite/scripts/shared.sh
 

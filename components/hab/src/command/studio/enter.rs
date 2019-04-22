@@ -30,7 +30,7 @@ pub const ARTIFACT_PATH_ENVVAR: &str = "ARTIFACT_PATH";
 const ORIGIN_ENVVAR: &str = "HAB_ORIGIN";
 const STUDIO_CMD: &str = "hab-studio";
 const STUDIO_CMD_ENVVAR: &str = "HAB_STUDIO_BINARY";
-const STUDIO_PACKAGE_IDENT: &str = "scotthain/hab-studio";
+const STUDIO_PACKAGE_IDENT: &str = "core/hab-studio";
 
 pub fn start(ui: &mut UI, args: &[OsString]) -> Result<()> {
     if henv::var(ORIGIN_ENVVAR).is_err() {

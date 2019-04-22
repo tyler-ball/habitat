@@ -10,7 +10,7 @@ pkg_build_deps=(core/coreutils
                 core/xz
                 core/wget
                 core/busybox-static
-                scotthain/hab)
+                core/hab)
 pkg_bin_dirs=(bin)
 
 do_build() {

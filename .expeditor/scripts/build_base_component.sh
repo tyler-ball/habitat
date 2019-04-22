@@ -10,10 +10,12 @@ set -euo pipefail
 # etc.
 component=${1}
 
+destination_channel
+
 # export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 
 # Set up our hab, it'll fail back to default installed if it doesn't exist
-hab_binary="$(hab pkg path scotthain/hab)/bin/hab" # || true # THIS IS DEBUG CODE AAAHHHH
+hab_binary="$(hab pkg path core/hab)/bin/hab"
 hab_binary_version=$($hab_binary --version)
 
 export HAB_BIN=$hab_binary

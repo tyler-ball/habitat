@@ -44,7 +44,7 @@ finish_setup() {
   done
 
   local hab_path
-  hab_path=$(_pkgpath_for scotthain/hab)
+  hab_path=$(_pkgpath_for core/hab)
   local sup_path
   sup_path=$(_pkgpath_for core/hab-sup)
   local busybox_path
@@ -83,7 +83,7 @@ finish_setup() {
   $bb mkdir -p $v "$HAB_STUDIO_ROOT""$HAB_ROOT_PATH"/bin
 
   # Put `hab` on the default `$PATH`
-  _hab pkg binlink --dest "$HAB_ROOT_PATH"/bin scotthain/hab hab
+  _hab pkg binlink --dest "$HAB_ROOT_PATH"/bin core/hab hab
 
   # Create `/bin/{sh,bash}` for software that hardcodes these shells
   _hab pkg binlink --dest=/bin core/busybox-static bash

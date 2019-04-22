@@ -3,7 +3,7 @@ $pkg_origin="scotthain"
 $pkg_version=Get-Content "$PLAN_CONTEXT/../../../VERSION"
 $pkg_maintainer="The Habitat Maintainers <humans@habitat.sh>"
 $pkg_license=@("Apache-2.0")
-$pkg_build_deps=@("core/powershell", "scotthain/hab", "scotthain/hab-plan-build-ps1", "core/7zip")
+$pkg_build_deps=@("core/powershell", "core/hab", "core/hab-plan-build-ps1", "core/7zip")
 $pkg_bin_dirs=@("bin")
 
 function Invoke-Build {
