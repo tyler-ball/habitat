@@ -15,6 +15,7 @@ sudo hab pkg install --channel $source_channel --force scotthain/hab
 hab_bin_path=$(hab pkg path scotthain/hab)
 ls -la $hab_bin_path
 hab_binary="$hab_bin_path/bin/hab"
+ls -la $hab_binary
 
 hab_binary_version=$($hab_binary --version)
 
