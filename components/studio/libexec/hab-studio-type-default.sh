@@ -14,8 +14,13 @@ studio_build_command="_record_build $HAB_ROOT_PATH/bin/build"
 studio_run_environment=
 studio_run_command="$HAB_ROOT_PATH/bin/hab pkg exec scotthain/hab-backline bash --login"
 
-pkgs="${HAB_STUDIO_BACKLINE_PKG:-scotthain/hab-backline/$(
+pkgs=("${HAB_STUDIO_BACKLINE_PKG:-scotthain/hab-backline/$(
   echo "$version" | $bb cut -d / -f 1)}"
+  "${HAB_BINARY_PKG:-scotthain/hab/$(
+  echo "$version" | $bb cut -d / -f 1)}"
+  "${HAB_PLAN_BUILD_PKG:-scotthain/plan-build/$(
+  echo "$version" | $bb cut -d / -f 1)}")
+
 
 run_user="hab"
 run_group="$run_user"
@@ -88,7 +93,7 @@ finish_setup() {
   # (This is also why we're not using HAB_BLDR_CHANNEL for this and
   # replicating the fallback logic from hab-plan-build; it'd be too
   # easy to create an unstable studio.)
-  for pkg in $pkgs; do
+  for pkg in ${pkgs[@]}; do
     if [ -n "${CI_OVERRIDE_CHANNEL:-}" ]; then
       info "Override channel set; retrieving ${pkg} from ${CI_OVERRIDE_CHANNEL}"
       _hab install --channel="${CI_OVERRIDE_CHANNEL}" "${pkg}" || {
@@ -199,7 +204,7 @@ if [[ -n "\${STUDIO_ENTER:-}" ]]; then
 fi
 
 # Add command line completion
-source <(hab cli completers --shell bash)
+# source <(hab cli completers --shell bash)
 PROFILE
 
   $bb cat > "$HAB_STUDIO_ROOT"/etc/profile.enter <<PROFILE_ENTER
