@@ -14,5 +14,3 @@ sudo hab pkg install --channel $source_channel scotthain/hab
 echo "--- Also installing busybox and stuff"
 sudo hab pkg install core/busybox
 export BUSYBOX=$(hab pkg path core/busybox)/bin/busybox
-
-$BUSYBOX --version
