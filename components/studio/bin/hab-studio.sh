@@ -1126,22 +1126,24 @@ set_libexec_path() {
   elif command -v busybox > /dev/null; then
     bb="$(command -v busybox)"
     info "Using busybox from path: $bb"
-  # Finally, check for each command required to calculate the path to libexec,
-  # after which we will have a `busybox` command we can use forever after
   else
-    if ! command -v basename > /dev/null; then
-      exit_with "Busybox not found, so 'basename' command must be on PATH" 99
-    fi
-    if ! command -v dirname > /dev/null; then
-      exit_with "Busybox not found, so 'dirname' command must be on PATH" 99
-    fi
-    if ! command -v pwd > /dev/null; then
-      exit_with "Busybox not found, so 'pwd' command must be on PATH" 99
-    fi
-    if ! command -v readlink > /dev/null; then
-      exit_with "Busybox not found, so 'readlink' command must be on PATH" 99
-    fi
     bb=
+    exit_with "Busybox not found, please use BUSYBOX environment variable or ensure busybox is on the path"
+  fi
+
+  # We need an "outside" of the studio habitat that has access to the keys
+  # This is consider our "bootstrap" hab, which is an older version
+  if [ -n "${BOOTSTRAP_HAB:-}" ] && [ -x "${BOOTSTRAP_HAB:-}" ]; then
+    bootstrap_hab="$BOOTSTRAP_HAB"
+    info "Using bootstrap hab from BOOTSTRAP_HAB env variable: $bootstrap_hab"
+    unset BOOTSTRAP_HAB
+  # Next, check to see if a `hab` command is on `PATH`
+  elif command -v hab > /dev/null; then
+    bootstrap_hab="$(command -v hab)"
+    info "Using bootstrap hab from path: $bootstrap_hab"
+  else
+    bootstrap_hab=
+    exit_with "Bootstrap hab not found, please use BOOTSTRAP_HAB environment variable or ensure hab is on the path"
   fi
 
   if [ -n "${HAB_STUDIO_BINARY:-}" ]; then
@@ -1191,10 +1193,6 @@ ERR_MOUNT_PERSISTS=81
 # cleanup
 ERR_REMAINING_MOUNTS=82
 
-#
-bb="$libexec_path/busybox"
-#
-hab="$libexec_path/hab"
 # The current version of Habitat Studio
 : "${version:=@version@}"
 # The author of this program

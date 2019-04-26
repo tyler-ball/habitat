@@ -12,5 +12,5 @@ echo "--- Installing hab binary from $source_channel"
 sudo hab pkg install --channel $source_channel scotthain/hab
 
 echo "--- Also installing busybox and stuff"
-sudo hab pkg install core/busybox
-export BUSYBOX=$(hab pkg path core/busybox)/bin/busybox
+sudo hab pkg install core/busybox-static
+export BUSYBOX=$(hab pkg path core/busybox-static)/bin/busybox

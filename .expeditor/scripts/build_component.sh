@@ -24,7 +24,10 @@ echo "--- Using habitat version $hab_binary_version"
 # export HAB_BIN=$hab_binary
 
 # probably grab dynamically or something
-# export HAB_BINARY_PKG=scotthain/hab/0.80.6/20190422194221
+export BUSYBOX=/hab/pkgs/core/busybox-static/1.29.2/20190115014552/bin/busybox
+export HAB_STUDIO_BACKLINE_PKG=scotthain/hab-backline/0.80.6/20190422194228
+export HAB_BINARY_PKG=scotthain/hab/0.80.6/20190422194221
+export HAB_PLAN_BUILD_PKG=scotthain/hab-plan-build/0.80.6/20190422194228
 
 echo "--- Running a build $HAB_ORIGIN / $component / ${destination_channel:-}"
 $hab_binary origin key download $HAB_ORIGIN
