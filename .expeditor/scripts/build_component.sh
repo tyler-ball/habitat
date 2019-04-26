@@ -31,7 +31,7 @@ $hab_binary origin key download $HAB_ORIGIN
 $hab_binary origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 
 echo "--- Using $hab_binary_version"
-HAB_BINARY_PKG=scotthain/hab/0.80.6/20190422194221 $hab_binary pkg build "components/${component}"
+components/studio/bin/hab-studio.sh build "components/${component}"
 . results/last_build.env
 
 # Always upload to the destination channel.
