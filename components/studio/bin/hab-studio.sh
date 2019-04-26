@@ -1120,10 +1120,12 @@ set_libexec_path() {
   # First check to see if we have been given a path to a `busybox` command
   if [ -n "${BUSYBOX:-}" ] && [ -x "${BUSYBOX:-}" ]; then
     bb="$BUSYBOX"
+    info "Using busybox from BUSYBOX env variable: $bb"
     unset BUSYBOX
   # Next, check to see if a `busybox` command is on `PATH`
   elif command -v busybox > /dev/null; then
     bb="$(command -v busybox)"
+    info "Using busybox from path: $bb"
   # Finally, check for each command required to calculate the path to libexec,
   # after which we will have a `busybox` command we can use forever after
   else
