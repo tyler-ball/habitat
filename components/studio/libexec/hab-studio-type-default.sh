@@ -101,6 +101,7 @@ finish_setup() {
         _hab install "${pkg}"
       }
     else
+    info "Installing package ${pkg} from stable"
       _hab install "$pkg"
     fi
   done
