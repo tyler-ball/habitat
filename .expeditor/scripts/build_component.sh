@@ -21,7 +21,10 @@ hab_binary_version=$($hab_binary --version)
 
 echo "--- Using habitat version $hab_binary_version"
 
-export HAB_BIN=$hab_binary
+# export HAB_BIN=$hab_binary
+
+# probably grab dynamically or something
+export HAB_BINARY_PKG=scotthain/hab/0.80.6/20190422194221
 
 echo "--- Running a build $HAB_ORIGIN / $component / ${destination_channel:-}"
 $hab_binary origin key download $HAB_ORIGIN
