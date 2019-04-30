@@ -60,7 +60,10 @@ steps:
     command:
       - .\test\run_clippy.ps1 stable .\test\unexamined_lints.txt .\test\allowed_lints.txt .\test\lints_to_fix.txt .\test\denied_lints.txt
     agents:
-      queue: 'single-use-windows-privileged'
+      queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 25
 
 #######################################################################
@@ -315,6 +318,9 @@ steps:
       - ./test/run_cargo_test.ps1 builder-api-client
     agents:
       queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 25
     retry:
       automatic:
@@ -325,6 +331,9 @@ steps:
       - ./test/run_cargo_test.ps1 butterfly -Nightly -Features "deadlock_detection" -TestOptions "--test-threads=1"
     agents:
       queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -335,6 +344,9 @@ steps:
       - ./test/run_cargo_test.ps1 common -TestOptions "--test-threads=1"
     agents:
       queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -345,6 +357,9 @@ steps:
       - ./test/run_cargo_test.ps1 core
     agents:
       queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -355,6 +370,9 @@ steps:
       - ./test/run_cargo_test.ps1 hab
     agents:
       queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -365,6 +383,9 @@ steps:
       - ./test/run_cargo_test.ps1 http-client
     agents:
       queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -375,6 +396,9 @@ steps:
       - ./test/run_cargo_test.ps1 launcher-client
     agents:
       queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 10
     retry:
       automatic:
@@ -385,6 +409,9 @@ steps:
       - ./test/run_cargo_test.ps1 launcher-protocol
     agents:
       queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 10
     retry:
       automatic:
@@ -395,6 +422,9 @@ steps:
       - ./test/run_cargo_test.ps1 pkg-export-docker
     agents:
       queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -405,6 +435,9 @@ steps:
       - ./test/run_cargo_test.ps1 pkg-export-tar
     agents:
       queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -416,6 +449,9 @@ steps:
       - ./test/run_cargo_test.ps1 sup -TestOptions "--test-threads=1"
     agents:
       queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 40
     retry:
       automatic:
@@ -426,6 +462,9 @@ steps:
       - ./test/run_cargo_test.ps1 sup-client
     agents:
       queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -436,6 +475,9 @@ steps:
       - ./test/run_cargo_test.ps1 sup-protocol
     agents:
       queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -595,7 +637,10 @@ steps:
     command:
       - ./support/ci/build_component.ps1 hab
     agents:
-      queue: 'single-use-windows-privileged'
+      queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     retry:
       automatic:
         limit: 1
@@ -604,7 +649,10 @@ steps:
     command:
       - ./support/ci/build_component.ps1 launcher
     agents:
-      queue: 'single-use-windows-privileged'
+      queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     retry:
       automatic:
         limit: 1
@@ -613,7 +661,10 @@ steps:
     command:
       - ./support/ci/build_component.ps1 pkg-export-docker
     agents:
-      queue: 'single-use-windows-privileged'
+      queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     retry:
       automatic:
         limit: 1
@@ -622,7 +673,10 @@ steps:
     command:
       - ./support/ci/build_component.ps1 pkg-export-tar
     agents:
-      queue: 'single-use-windows-privileged'
+      queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     retry:
       automatic:
         limit: 1
@@ -631,7 +685,10 @@ steps:
     command:
       - ./support/ci/build_component.ps1 plan-build-ps1
     agents:
-      queue: 'single-use-windows-privileged'
+      queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     retry:
       automatic:
         limit: 1
@@ -640,7 +697,10 @@ steps:
     command:
       - ./support/ci/build_component.ps1 studio
     agents:
-      queue: 'single-use-windows-privileged'
+      queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     retry:
       automatic:
         limit: 1
@@ -649,7 +709,10 @@ steps:
     command:
       - ./support/ci/build_component.ps1 sup
     agents:
-      queue: 'single-use-windows-privileged'
+      queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     retry:
       automatic:
         limit: 1
@@ -658,7 +721,10 @@ steps:
     command:
       - ./support/ci/build_component.ps1 windows-service
     agents:
-      queue: 'single-use-windows-privileged'
+      queue: 'default-windows-privileged'
+    plugins:
+      docker#v3.0.1:
+        image: "chefes/buildkite-windows"
     retry:
       automatic:
         limit: 1
