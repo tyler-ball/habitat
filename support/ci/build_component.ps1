@@ -7,6 +7,8 @@ param (
     [string]$Component
 )
 
+choco install habitat -y
+
 # Since we are only verifying we don't have build failures, make everything
 # temp!
 $env:HAB_ORIGIN="throwaway"
