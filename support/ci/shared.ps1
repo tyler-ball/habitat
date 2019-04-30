@@ -84,6 +84,8 @@ function New-PathString([string]$StartingPath, [string]$Path) {
 }
 
 function Setup-Environment {
+    choco install habitat -y
+
     Install-HabPkg @(
         "core/cacerts",
         "core/libarchive",
