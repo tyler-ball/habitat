@@ -14,7 +14,7 @@ sanitize_secrets() {
 # to pass into the studio
 load_secrets() {
   sanitize_secrets
-  hab pkg exec scotthain/hab-backline env | hab pkg exec scotthain/hab-backline awk -F '=' '/^HAB_STUDIO_SECRET_/ {gsub(/HAB_STUDIO_SECRET_/, ""); print}'
+  hab pkg exec core/hab-backline env | hab pkg exec core/hab-backline awk -F '=' '/^HAB_STUDIO_SECRET_/ {gsub(/HAB_STUDIO_SECRET_/, ""); print}'
 }
 
 if [ -n "${HAB_CONFIG_EXCLUDE:-}" ]; then

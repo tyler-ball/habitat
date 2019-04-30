@@ -8,17 +8,17 @@
 studio_type="default"
 studio_path="$HAB_ROOT_PATH/bin"
 studio_enter_environment="STUDIO_ENTER=true"
-studio_enter_command="$HAB_ROOT_PATH/bin/hab pkg exec scotthain/hab-backline bash --login +h"
+studio_enter_command="$HAB_ROOT_PATH/bin/hab pkg exec core/hab-backline bash --login +h"
 studio_build_environment=
 studio_build_command="_record_build $HAB_ROOT_PATH/bin/build"
 studio_run_environment=
-studio_run_command="$HAB_ROOT_PATH/bin/hab pkg exec scotthain/hab-backline bash --login"
+studio_run_command="$HAB_ROOT_PATH/bin/hab pkg exec core/hab-backline bash --login"
 
-pkgs=("${HAB_STUDIO_BACKLINE_PKG:-scotthain/hab-backline/$(
+pkgs=("${HAB_STUDIO_BACKLINE_PKG:-core/hab-backline/$(
   echo "$version" | $bb cut -d / -f 1)}"
-  "${HAB_BINARY_PKG:-scotthain/hab/$(
+  "${HAB_BINARY_PKG:-core/hab/$(
   echo "$version" | $bb cut -d / -f 1)}"
-  "${HAB_PLAN_BUILD_PKG:-scotthain/plan-build/$(
+  "${HAB_PLAN_BUILD_PKG:-core/plan-build/$(
   echo "$version" | $bb cut -d / -f 1)}")
 
 
@@ -113,7 +113,7 @@ finish_setup() {
   $bb mkdir -p $v "$HAB_STUDIO_ROOT""$HAB_ROOT_PATH"/bin
 
   # Put `hab` on the default `$PATH`
-  _hab pkg binlink --dest "$HAB_ROOT_PATH"/bin scotthain/hab hab
+  _hab pkg binlink --dest "$HAB_ROOT_PATH"/bin core/hab hab
 
   # Create `/bin/{sh,bash}` for software that hardcodes these shells
   _hab pkg binlink core/bash bash
@@ -126,7 +126,7 @@ finish_setup() {
   # `$PATH` is concerned.
   $bb cat <<EOF > "$HAB_STUDIO_ROOT""$HAB_ROOT_PATH"/bin/build
 #!$bash_path/bin/sh
-exec $HAB_ROOT_PATH/bin/hab pkg exec scotthain/hab-plan-build hab-plan-build "\$@"
+exec $HAB_ROOT_PATH/bin/hab pkg exec core/hab-plan-build hab-plan-build "\$@"
 EOF
   # shellcheck disable=2086
   $bb chmod $v 755 "$HAB_STUDIO_ROOT""$HAB_ROOT_PATH"/bin/build

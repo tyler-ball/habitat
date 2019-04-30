@@ -10,7 +10,7 @@ pkg_deps=(core/coreutils
           core/grep
           core/bash
           core/acbuild
-          scotthain/hab-studio)
+          core/hab-studio)
 pkg_build_deps=()
 pkg_bin_dirs=(bin)
 

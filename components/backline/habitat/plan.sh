@@ -1,11 +1,11 @@
 pkg_name=hab-backline
-pkg_origin=scotthain
+pkg_origin=core
 pkg_version=$(cat "$SRC_PATH/../../VERSION")
 pkg_maintainer="The Habitat Maintainers <humans@habitat.sh>"
 pkg_license=('Apache-2.0')
 pkg_build_deps=()
 
-pkg_deps=(scotthain/hab-plan-build
+pkg_deps=(core/hab-plan-build
           core/diffutils
           core/less
           core/make

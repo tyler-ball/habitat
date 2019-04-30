@@ -1,6 +1,6 @@
 # shellcheck disable=2034
 pkg_name=hab-studio
-pkg_origin=scotthain
+pkg_origin=core
 pkg_version=$(cat "$SRC_PATH/../../VERSION")
 pkg_maintainer="The Habitat Maintainers <humans@habitat.sh>"
 pkg_license=('Apache-2.0')
@@ -10,7 +10,7 @@ pkg_build_deps=(core/coreutils
                 core/xz
                 core/wget
                 core/busybox-static
-                scotthain/hab)
+                core/hab)
 pkg_bin_dirs=(bin)
 
 do_build() {

@@ -15,7 +15,7 @@ pkg_deps=(core/coreutils
           core/grep
           core/findutils
           core/gawk
-          scotthain/hab)
+          core/hab)
 pkg_bin_dirs=(bin)
 
 do_build() {
