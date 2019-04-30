@@ -15,6 +15,6 @@ Write-Host "--- :key: Generating fake origin key"
 hab origin key generate
 Write-Host "--- :hab: Running hab pkg build for $Component"
 
-hab studio build components/$Component
+hab pkg build components/$Component
 
 exit $LASTEXITCODE
