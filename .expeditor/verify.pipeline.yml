@@ -29,6 +29,11 @@ steps:
       - ./support/ci/rustfmt.sh
     agents:
       queue: 'default-privileged'
+      docker#v3.0.1:
+        always-pull: true
+        user: "buildkite-agent"
+        group: "buildkite-agent"
+        image: "chefes/buildkite"
     timeout_in_minutes: 10
     retry:
       automatic:
@@ -40,9 +45,16 @@ steps:
       - sudo yum update bash # make sure we have 4.4 or later
       - sudo make lint
     agents:
-      queue: 'single-use-privileged'
+      queue: 'default-privileged'
+      docker#v3.0.1:
+        always-pull: true
+        user: "buildkite-agent"
+        group: "buildkite-agent"
+        image: "chefes/buildkite"
     timeout_in_minutes: 10
-
+    retry:
+      automatic:
+        limit: 1
 
   - label: "[lint] :windows: :paperclip: clippy!"
     command:
