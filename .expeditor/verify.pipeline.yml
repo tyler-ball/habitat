@@ -8,334 +8,334 @@ steps:
 # Linting!
 #######################################################################
 
-  - label: "[lint] :linux: :bash: Shellcheck"
-    command:
-      - ./test/shellcheck.sh
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[lint] :linux: :bash: Shellcheck"
+#     command:
+#       - ./test/shellcheck.sh
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[lint] :linux: :bash: rustfmt"
-    command:
-      - ./support/ci/rustfmt.sh
-    agents:
-      queue: 'default-privileged'
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[lint] :linux: :bash: rustfmt"
+#     command:
+#       - ./support/ci/rustfmt.sh
+#     agents:
+#       queue: 'default-privileged'
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[lint] :linux: :paperclip: clippy!"
-    command:
-      # - sudo yum install gcc -y # install GCC since it's required for the cargo build
-      # - sudo yum update bash # make sure we have 4.4 or later
-      - make lint
-    agents:
-      queue: 'default-privileged'
-      docker#v3.0.1:
-        always-pull: true
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[lint] :linux: :paperclip: clippy!"
+#     command:
+#       # - sudo yum install gcc -y # install GCC since it's required for the cargo build
+#       # - sudo yum update bash # make sure we have 4.4 or later
+#       - make lint
+#     agents:
+#       queue: 'default-privileged'
+#       docker#v3.0.1:
+#         always-pull: true
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[lint] :windows: :paperclip: clippy!"
-    command:
-      - ./test/run_clippy.ps1 stable ./test/unexamined_lints.txt ./test/allowed_lints.txt ./test/lints_to_fix.txt ./test/denied_lints.txt
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-    timeout_in_minutes: 25
+#   - label: "[lint] :windows: :paperclip: clippy!"
+#     command:
+#       - ./test/run_clippy.ps1 stable ./test/unexamined_lints.txt ./test/allowed_lints.txt ./test/lints_to_fix.txt ./test/denied_lints.txt
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#     timeout_in_minutes: 25
 
-#######################################################################
-# Unit Tests - Linux!
-#######################################################################
+# #######################################################################
+# # Unit Tests - Linux!
+# #######################################################################
 
-  - label: "[unit] :linux: builder-api-client"
-    command:
-      - ./test/run_cargo_test.sh builder-api-client
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 20
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: builder-api-client"
+#     command:
+#       - ./test/run_cargo_test.sh builder-api-client
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 20
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: butterfly"
-    command:
-      - ./test/run_cargo_test.sh --nightly --features "deadlock_detection" --test-options "--test-threads=1" butterfly
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 20
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: butterfly"
+#     command:
+#       - ./test/run_cargo_test.sh --nightly --features "deadlock_detection" --test-options "--test-threads=1" butterfly
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 20
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: common"
-    command:
-      - ./test/run_cargo_test.sh common
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: common"
+#     command:
+#       - ./test/run_cargo_test.sh common
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: core"
-    command:
-      - ./test/run_cargo_test.sh core
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: core"
+#     command:
+#       - ./test/run_cargo_test.sh core
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: http-client"
-    command:
-      - ./test/run_cargo_test.sh http-client
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: http-client"
+#     command:
+#       - ./test/run_cargo_test.sh http-client
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: hab"
-    command:
-      - ./test/run_cargo_test.sh hab
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: hab"
+#     command:
+#       - ./test/run_cargo_test.sh hab
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: launcher-client"
-    command:
-      - ./test/run_cargo_test.sh launcher-client
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: launcher-client"
+#     command:
+#       - ./test/run_cargo_test.sh launcher-client
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: launcher-protocol"
-    command:
-      - ./test/run_cargo_test.sh launcher-protocol
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: launcher-protocol"
+#     command:
+#       - ./test/run_cargo_test.sh launcher-protocol
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: pkg-export-docker"
-    command:
-      - ./test/run_cargo_test.sh pkg-export-docker
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: pkg-export-docker"
+#     command:
+#       - ./test/run_cargo_test.sh pkg-export-docker
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: pkg-export-helm"
-    command:
-      - ./test/run_cargo_test.sh pkg-export-helm
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: pkg-export-helm"
+#     command:
+#       - ./test/run_cargo_test.sh pkg-export-helm
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: pkg-export-kubernetes"
-    command:
-      - ./test/run_cargo_test.sh pkg-export-kubernetes
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: pkg-export-kubernetes"
+#     command:
+#       - ./test/run_cargo_test.sh pkg-export-kubernetes
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: pkg-export-tar"
-    command:
-      - ./test/run_cargo_test.sh pkg-export-tar
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: pkg-export-tar"
+#     command:
+#       - ./test/run_cargo_test.sh pkg-export-tar
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: sup"
-    command:
-      - ./test/run_cargo_test.sh --features "ignore_integration_tests"  sup
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: sup"
+#     command:
+#       - ./test/run_cargo_test.sh --features "ignore_integration_tests"  sup
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: sup-client"
-    command:
-      - ./test/run_cargo_test.sh sup-client
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: sup-client"
+#     command:
+#       - ./test/run_cargo_test.sh sup-client
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :linux: sup-protocol"
-    command:
-      - ./test/run_cargo_test.sh sup-protocol
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :linux: sup-protocol"
+#     command:
+#       - ./test/run_cargo_test.sh sup-protocol
+#     agents:
+#       queue: 'default-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         always-pull: true
+#         user: "buildkite-agent"
+#         group: "buildkite-agent"
+#         image: "chefes/buildkite"
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
- #################################################################
+#  #################################################################
 
 
-  - label: "[unit] :windows: builder-api-client"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./test/run_cargo_test.ps1", "builder-api-client"]
-    timeout_in_minutes: 25
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :windows: builder-api-client"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./test/run_cargo_test.ps1", "builder-api-client"]
+#     timeout_in_minutes: 25
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :windows: butterfly"
-    command:
-      - ./test/run_cargo_test.ps1 butterfly -Nightly -Features "deadlock_detection" -TestOptions "--test-threads=1"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./test/run_cargo_test.ps1", "butterfly", "-Nightly", "-Features", "\"deadlock_detection\"", "-TestOptions", "\"--test-threads=1\""]
-    timeout_in_minutes: 20
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :windows: butterfly"
+#     command:
+#       - ./test/run_cargo_test.ps1 butterfly -Nightly -Features "deadlock_detection" -TestOptions "--test-threads=1"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./test/run_cargo_test.ps1", "butterfly", "-Nightly", "-Features", "\"deadlock_detection\"", "-TestOptions", "\"--test-threads=1\""]
+#     timeout_in_minutes: 20
+#     retry:
+#       automatic:
+#         limit: 1
 
   - label: "[unit] :windows: common"
     agents:
@@ -343,355 +343,355 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: ["./test/run_cargo_test.ps1", "common", "-TestOptions", "\"--test-threads=1\""]
+        command: [".\\test\\run_cargo_test.ps1", "common", "-TestOptions", "\"--test-threads=1\""]
     timeout_in_minutes: 20
     retry:
       automatic:
         limit: 1
 
-  - label: "[unit] :windows: core"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./test/run_cargo_test.ps1", "core"]
-    timeout_in_minutes: 20
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :windows: core"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./test/run_cargo_test.ps1", "core"]
+#     timeout_in_minutes: 20
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :windows: hab"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./test/run_cargo_test.ps1", "hab"]
-    timeout_in_minutes: 20
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :windows: hab"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./test/run_cargo_test.ps1", "hab"]
+#     timeout_in_minutes: 20
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :windows: http-client"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./test/run_cargo_test.ps1", "http-client"]
-    timeout_in_minutes: 20
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :windows: http-client"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./test/run_cargo_test.ps1", "http-client"]
+#     timeout_in_minutes: 20
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :windows: launcher-client"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./test/run_cargo_test.ps1", "launcher-client"]
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :windows: launcher-client"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./test/run_cargo_test.ps1", "launcher-client"]
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :windows: launcher-protocol"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./test/run_cargo_test.ps1", "launcher-protocol"]
-    timeout_in_minutes: 10
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :windows: launcher-protocol"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./test/run_cargo_test.ps1", "launcher-protocol"]
+#     timeout_in_minutes: 10
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :windows: pkg-export-docker"
-    command:
-      - ./test/run_cargo_test.ps1 pkg-export-docker
-    agents:
-      queue: 'default-windows-privileged'
-    timeout_in_minutes: 20
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :windows: pkg-export-docker"
+#     command:
+#       - ./test/run_cargo_test.ps1 pkg-export-docker
+#     agents:
+#       queue: 'default-windows-privileged'
+#     timeout_in_minutes: 20
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :windows: pkg-export-tar"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./test/run_cargo_test.ps1", "pkg-export-tar"]
-    timeout_in_minutes: 20
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :windows: pkg-export-tar"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./test/run_cargo_test.ps1", "pkg-export-tar"]
+#     timeout_in_minutes: 20
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :windows: sup"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./test/run_cargo_test.ps1", "sup", "-TestOptions", "\"--test-threads=1\""]
-    timeout_in_minutes: 40
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :windows: sup"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./test/run_cargo_test.ps1", "sup", "-TestOptions", "\"--test-threads=1\""]
+#     timeout_in_minutes: 40
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :windows: sup-client"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./test/run_cargo_test.ps1", "sup-client"]
-    timeout_in_minutes: 20
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :windows: sup-client"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./test/run_cargo_test.ps1", "sup-client"]
+#     timeout_in_minutes: 20
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[unit] :windows: sup-protocol"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./test/run_cargo_test.ps1", "sup-protocol"]
-    timeout_in_minutes: 20
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[unit] :windows: sup-protocol"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./test/run_cargo_test.ps1", "sup-protocol"]
+#     timeout_in_minutes: 20
+#     retry:
+#       automatic:
+#         limit: 1
 
-#######################################################################
-# Things that have no tests but should be built to make sure they
-# still build. - Linux
-#######################################################################
+# #######################################################################
+# # Things that have no tests but should be built to make sure they
+# # still build. - Linux
+# #######################################################################
 
-  - label: "[build] :linux: backline"
-    command:
-      - ./support/ci/build_component.sh backline
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: backline"
+#     command:
+#       - ./support/ci/build_component.sh backline
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: bintray-publish"
-    command:
-      - ./support/ci/build_component.sh bintray-publish
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: bintray-publish"
+#     command:
+#       - ./support/ci/build_component.sh bintray-publish
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: hab"
-    env:
-      # TODO: this env var should be deleted after
-      # https://github.com/habitat-sh/habitat/pull/6364 merges and is released
-      HAB_STUDIO_SECRET_HAB_LICENSE: "accept-no-persist"
-      HAB_LICENSE: "accept-no-persist"
-    command:
-      - ./support/ci/build_component.sh hab
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: hab"
+#     env:
+#       # TODO: this env var should be deleted after
+#       # https://github.com/habitat-sh/habitat/pull/6364 merges and is released
+#       HAB_STUDIO_SECRET_HAB_LICENSE: "accept-no-persist"
+#       HAB_LICENSE: "accept-no-persist"
+#     command:
+#       - ./support/ci/build_component.sh hab
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: launcher"
-    command:
-      - ./support/ci/build_component.sh launcher
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: launcher"
+#     command:
+#       - ./support/ci/build_component.sh launcher
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: pkg-aci"
-    command:
-      - ./support/ci/build_component.sh pkg-aci
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: pkg-aci"
+#     command:
+#       - ./support/ci/build_component.sh pkg-aci
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: pkg-cfize"
-    command:
-      - ./support/ci/build_component.sh pkg-cfize
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: pkg-cfize"
+#     command:
+#       - ./support/ci/build_component.sh pkg-cfize
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: pkg-dockerize"
-    command:
-      - ./support/ci/build_component.sh pkg-dockerize
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: pkg-dockerize"
+#     command:
+#       - ./support/ci/build_component.sh pkg-dockerize
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: pkg-export-docker"
-    command:
-      - ./support/ci/build_component.sh pkg-export-docker
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: pkg-export-docker"
+#     command:
+#       - ./support/ci/build_component.sh pkg-export-docker
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: pkg-export-helm"
-    command:
-      - ./support/ci/build_component.sh pkg-export-helm
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: pkg-export-helm"
+#     command:
+#       - ./support/ci/build_component.sh pkg-export-helm
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: pkg-export-kubernetes"
-    command:
-      - ./support/ci/build_component.sh pkg-export-kubernetes
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: pkg-export-kubernetes"
+#     command:
+#       - ./support/ci/build_component.sh pkg-export-kubernetes
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: pkg-export-tar"
-    command:
-      - ./support/ci/build_component.sh pkg-export-tar
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: pkg-export-tar"
+#     command:
+#       - ./support/ci/build_component.sh pkg-export-tar
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: pkg-mesosize"
-    command:
-      - ./support/ci/build_component.sh pkg-mesosize
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: pkg-mesosize"
+#     command:
+#       - ./support/ci/build_component.sh pkg-mesosize
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: plan-build"
-    command:
-      - ./support/ci/build_component.sh plan-build
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: plan-build"
+#     command:
+#       - ./support/ci/build_component.sh plan-build
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: studio"
-    command:
-      - ./support/ci/build_component.sh studio
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: studio"
+#     command:
+#       - ./support/ci/build_component.sh studio
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :linux: sup"
-    command:
-      - ./support/ci/build_component.sh sup
-    agents:
-      queue: 'default-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :linux: sup"
+#     command:
+#       - ./support/ci/build_component.sh sup
+#     agents:
+#       queue: 'default-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-#######################################################################
-# Things that have no tests but should be built to make sure they
-# still build. - Windows
-#######################################################################
+# #######################################################################
+# # Things that have no tests but should be built to make sure they
+# # still build. - Windows
+# #######################################################################
 
-  - label: "[build] :windows: hab"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./support/ci/build_component.ps1", "hab"]
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :windows: hab"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./support/ci/build_component.ps1", "hab"]
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :windows: launcher"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./support/ci/build_component.ps1", "launcher"]
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :windows: launcher"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./support/ci/build_component.ps1", "launcher"]
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :windows: pkg-export-docker"
-    command:
-      - ./support/ci/build_component.ps1 pkg-export-docker
-    # Can't run this one in docker
-    agents:
-      queue: 'default-windows-privileged'
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :windows: pkg-export-docker"
+#     command:
+#       - ./support/ci/build_component.ps1 pkg-export-docker
+#     # Can't run this one in docker
+#     agents:
+#       queue: 'default-windows-privileged'
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :windows: pkg-export-tar"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./support/ci/build_component.ps1", "pkg-export-tar"]
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :windows: pkg-export-tar"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./support/ci/build_component.ps1", "pkg-export-tar"]
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :windows: plan-build-ps1"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./support/ci/build_component.ps1", "plan-build-ps1"]
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :windows: plan-build-ps1"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./support/ci/build_component.ps1", "plan-build-ps1"]
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :windows: studio"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./support/ci/build_component.ps1", "studio"]
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :windows: studio"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./support/ci/build_component.ps1", "studio"]
+#     retry:
+#       automatic:
+#         limit: 1
 
-  - label: "[build] :windows: sup"
-    agents:
-      queue: 'default-windows-privileged'
-    plugins:
-      docker#v3.0.1:
-        image: "chefes/buildkite-windows"
-        command: ["./support/ci/build_component.ps1", "sup"]
-    retry:
-      automatic:
-        limit: 1
+#   - label: "[build] :windows: sup"
+#     agents:
+#       queue: 'default-windows-privileged'
+#     plugins:
+#       docker#v3.0.1:
+#         image: "chefes/buildkite-windows"
+#         command: ["./support/ci/build_component.ps1", "sup"]
+#     retry:
+#       automatic:
+#         limit: 1
 
   - label: "[build] :windows: windows-service"
     agents:
@@ -699,7 +699,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: ["./support/ci/build_component.ps1", "windows-service"]
+        command: [".\\support\\ci\\build_component.ps1", "windows-service"]
     retry:
       automatic:
         limit: 1
