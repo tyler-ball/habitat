@@ -56,7 +56,7 @@ steps:
 
   - label: "[lint] :windows: :paperclip: clippy!"
     command:
-      - .\test\run_clippy.ps1 stable .\test\unexamined_lints.txt .\test\allowed_lints.txt .\test\lints_to_fix.txt .\test\denied_lints.txt
+      - ./test/run_clippy.ps1 stable ./test/unexamined_lints.txt ./test/allowed_lints.txt ./test/lints_to_fix.txt ./test/denied_lints.txt
     agents:
       queue: 'default-windows-privileged'
     plugins:
@@ -317,7 +317,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\test\run_cargo_test.ps1", "builder-api-client"]
+        command: ["./test/run_cargo_test.ps1", "builder-api-client"]
     timeout_in_minutes: 25
     retry:
       automatic:
@@ -331,7 +331,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\test\run_cargo_test.ps1", "butterfly", "-Nightly", "-Features", "\"deadlock_detection\"", "-TestOptions", "\"--test-threads=1\""]
+        command: ["./test/run_cargo_test.ps1", "butterfly", "-Nightly", "-Features", "\"deadlock_detection\"", "-TestOptions", "\"--test-threads=1\""]
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -343,7 +343,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\test\run_cargo_test.ps1", "common", "-TestOptions", "\"--test-threads=1\""]
+        command: ["./test/run_cargo_test.ps1", "common", "-TestOptions", "\"--test-threads=1\""]
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -355,7 +355,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\test\run_cargo_test.ps1", "core"]
+        command: ["./test/run_cargo_test.ps1", "core"]
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -367,7 +367,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\test\run_cargo_test.ps1", "hab"]
+        command: ["./test/run_cargo_test.ps1", "hab"]
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -379,7 +379,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\test\run_cargo_test.ps1", "http-client"]
+        command: ["./test/run_cargo_test.ps1", "http-client"]
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -391,7 +391,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\test\run_cargo_test.ps1", "launcher-client"]
+        command: ["./test/run_cargo_test.ps1", "launcher-client"]
     timeout_in_minutes: 10
     retry:
       automatic:
@@ -403,7 +403,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\test\run_cargo_test.ps1", "launcher-protocol"]
+        command: ["./test/run_cargo_test.ps1", "launcher-protocol"]
     timeout_in_minutes: 10
     retry:
       automatic:
@@ -420,43 +420,36 @@ steps:
         limit: 1
 
   - label: "[unit] :windows: pkg-export-tar"
-    command:
-      - ./test/run_cargo_test.ps1 pkg-export-tar
     agents:
       queue: 'default-windows-privileged'
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\test\run_cargo_test.ps1", "sup-protocol"]
+        command: ["./test/run_cargo_test.ps1", "pkg-export-tar"]
     timeout_in_minutes: 20
     retry:
       automatic:
         limit: 1
 
   - label: "[unit] :windows: sup"
-    command:
-      # This test has test (not code) concurrency issues and will fail if we don't limit it
-      - ./test/run_cargo_test.ps1 sup -TestOptions "--test-threads=1"
     agents:
       queue: 'default-windows-privileged'
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\test\run_cargo_test.ps1", "sup-protocol"]
+        command: ["./test/run_cargo_test.ps1", "sup", "-TestOptions", "\"--test-threads=1\""]
     timeout_in_minutes: 40
     retry:
       automatic:
         limit: 1
 
   - label: "[unit] :windows: sup-client"
-    command:
-      - ./test/run_cargo_test.ps1 sup-client
     agents:
       queue: 'default-windows-privileged'
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\test\run_cargo_test.ps1", "sup-protocol"]
+        command: ["./test/run_cargo_test.ps1", "sup-client"]
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -468,7 +461,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\test\run_cargo_test.ps1", "sup-protocol"]
+        command: ["./test/run_cargo_test.ps1", "sup-protocol"]
     timeout_in_minutes: 20
     retry:
       automatic:
@@ -630,7 +623,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\support\ci\build_component.ps1", "hab"]
+        command: ["./support/ci/build_component.ps1", "hab"]
     retry:
       automatic:
         limit: 1
@@ -641,7 +634,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\support\ci\build_component.ps1", "launcher"]
+        command: ["./support/ci/build_component.ps1", "launcher"]
     retry:
       automatic:
         limit: 1
@@ -662,7 +655,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\support\ci\build_component.ps1", "pkg-export-tar"]
+        command: ["./support/ci/build_component.ps1", "pkg-export-tar"]
     retry:
       automatic:
         limit: 1
@@ -673,7 +666,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\support\ci\build_component.ps1", "plan-build-ps1"]
+        command: ["./support/ci/build_component.ps1", "plan-build-ps1"]
     retry:
       automatic:
         limit: 1
@@ -684,7 +677,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\support\ci\build_component.ps1", "studio"]
+        command: ["./support/ci/build_component.ps1", "studio"]
     retry:
       automatic:
         limit: 1
@@ -695,7 +688,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\support\ci\build_component.ps1", "sup"]
+        command: ["./support/ci/build_component.ps1", "sup"]
     retry:
       automatic:
         limit: 1
@@ -706,7 +699,7 @@ steps:
     plugins:
       docker#v3.0.1:
         image: "chefes/buildkite-windows"
-        command: [".\support\ci\build_component.ps1", "windows-service"]
+        command: ["./support/ci/build_component.ps1", "windows-service"]
     retry:
       automatic:
         limit: 1
