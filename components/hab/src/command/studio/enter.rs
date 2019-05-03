@@ -77,7 +77,7 @@ mod inner {
                         fs::{am_i_root,
                              find_command},
                         os::process,
-                        package::PackageIdent,
+                        package::{PackageIdent,PackageInstall},
                         users::linux as group},
                 VERSION};
     use std::{env,
@@ -87,24 +87,40 @@ mod inner {
 
     const SUDO_CMD: &str = "sudo";
 
+    // Restructured to make it go for an experiment. Cleanliness later :) 
     pub fn start(ui: &mut UI, args: &[OsString]) -> Result<()> {
         rerun_with_sudo_if_needed(ui, &args)?;
         if is_docker_studio(&args) {
             docker::start_docker_studio(ui, args)
         } else {
+            init();
+            let version: Vec<&str> = VERSION.split('/').collect();
+            let ident = PackageIdent::from_str(&format!("{}/{}",
+                                                        super::STUDIO_PACKAGE_IDENT,
+                                                            version[0]))?;
             let command = match henv::var(super::STUDIO_CMD_ENVVAR) {
                 Ok(command) => PathBuf::from(command),
                 Err(_) => {
-                    init();
-                    let version: Vec<&str> = VERSION.split('/').collect();
-                    let ident = PackageIdent::from_str(&format!("{}/{}",
-                                                                super::STUDIO_PACKAGE_IDENT,
-                                                                version[0]))?;
                     exec::command_from_min_pkg(ui, super::STUDIO_CMD, &ident)?
                 }
             };
-
+            // Invoke the same way we do `hab pkg exec`  This should probably be 
+            // hab::process::become_command_with_env or something? 
             if let Some(cmd) = find_command(command.to_string_lossy().as_ref()) {
+                let pkg_install = PackageInstall::load(&ident, None)?;
+                let cmd_env = pkg_install.environment_for_command()?;
+                for (key, value) in cmd_env.into_iter() {
+                    debug!("Setting: {}='{}'", key, value);
+                    env::set_var(key, value);
+                }
+                
+                let mut display_args = cmd.to_string_lossy().into_owned();
+                for arg in args {
+                    display_args.push(' ');
+                    display_args.push_str(arg.to_string_lossy().as_ref());
+                }
+                debug!("Running: {}", display_args);
+
                 process::become_command(cmd, args)?;
                 Ok(())
             } else {

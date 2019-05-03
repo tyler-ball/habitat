@@ -1143,9 +1143,9 @@ ERR_MOUNT_PERSISTS=81
 ERR_REMAINING_MOUNTS=82
 
 #
-bb="$libexec_path/busybox"
+#bb="$libexec_path/busybox"
 #
-hab="$libexec_path/hab"
+#hab="$libexec_path/hab"
 # The current version of Habitat Studio
 : "${version:=@version@}"
 # The author of this program
