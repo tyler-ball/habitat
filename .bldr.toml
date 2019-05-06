@@ -1,12 +1,12 @@
-# [hab]
-# plan_path = "components/hab"
-# paths = [
-#   "components/builder-api-client/*",
-#   "components/builder-depot-client/*",
-#   "components/common/*",
-#   "components/sup-client/*",
-#   "components/sup-protocol/*",
-# ]
+[hab]
+plan_path = "components/hab/habitat/plan.sh"
+paths = [
+  "components/builder-api-client/*",
+  "components/builder-depot-client/*",
+  "components/common/*",
+  "components/sup-client/*",
+  "components/sup-protocol/*",
+]
 
 # [hab-backline]
 # plan_path = "components/backline"
@@ -33,8 +33,8 @@
 #   "support/ci/builder-base-plan.sh",
 # ]
 
-[hab-plan-build]
-plan_path = "components/plan-build"
+# [hab-plan-build]
+# plan_path = "components/plan-build"
 
 # [hab-studio]
 # plan_path = "components/studio"
