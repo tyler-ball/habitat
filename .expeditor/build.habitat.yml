@@ -1,4 +1,4 @@
 ---
 origin: scotthain
-bldr_toml: .launcher.bldr.toml
+bldr_toml: .bldr.toml
 # smart_build: true
