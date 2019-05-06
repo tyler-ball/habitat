@@ -388,7 +388,7 @@ impl Service {
         let f = self.supervisor
                     .lock()
                     .expect("Couldn't lock supervisor")
-                    .stop()
+                    .stop(shutdown_spec)
                     .and_then(move |_| {
                         gs.write()
                           .expect("GatewayState lock is poisoned")
