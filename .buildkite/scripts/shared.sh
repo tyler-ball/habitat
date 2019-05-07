@@ -134,7 +134,9 @@ install_hab_binary() {
     target="$1"
     install_path="$2"
 
-    sudo env HAB_BINLINK_DIR="$install_path" ./components/hab/install.sh -t "$target"
+    #sudo env HAB_BINLINK_DIR="$install_path" ./components/hab/install.sh -t "$target"
+    sudo ./components/hab/install.sh -t "$target"
+    sudo /bin/hab pkg binlink core/hab hab -d $install_path 
 }
 
 # The following get/set functions abstract the meta-data key
