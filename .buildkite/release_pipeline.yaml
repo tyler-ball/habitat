@@ -28,6 +28,7 @@ steps:
   - wait
 
   - block: ":question: Do you need a new Launcher built for this release?"
+    skip: true
     prompt: |
       If you know there have been important changes to the Launcher
       since the last release that call for a new release of the
