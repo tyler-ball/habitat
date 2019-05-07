@@ -9,7 +9,7 @@ steps:
         always-pull: true
         user: "buildkite-agent"
         group: "buildkite-agent"
-        image: "chefes/buildkite"
+        image: "ubuntu:18.04"
     timeout_in_minutes: 10
     retry:
       automatic:
