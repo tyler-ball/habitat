@@ -31,14 +31,14 @@ echo "--- Using habitat version $hab_binary_version"
 # export HAB_BINARY_PKG=core/hab/0.80.6/20190422194221
 # export HAB_PLAN_BUILD_PKG=core/hab-plan-build/0.80.6/20190422194228
 
- echo "--- Running a build $HAB_ORIGIN / $component / ${destination_channel:-}"
+echo "--- Running a build $HAB_ORIGIN / $component / ${destination_channel:-}"
 $hab_binary origin key download $HAB_ORIGIN
 $hab_binary origin key download --auth $SCOTTHAIN_HAB_AUTH_TOKEN --secret $HAB_ORIGIN
 
- echo "--- Using $hab_binary_version"
+echo "--- Using $hab_binary_version"
 $hab_binary pkg build "components/${component}"
 # components/studio/bin/hab-studio.sh build "components/${component}"
 . results/last_build.env
 
-# Always upload to the destination channel.
-$hab_binary pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $destination_channel "results/$pkg_artifact"
+# # Always upload to the destination channel.
+# $hab_binary pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $destination_channel "results/$pkg_artifact"
