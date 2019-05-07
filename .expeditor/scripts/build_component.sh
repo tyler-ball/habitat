@@ -13,11 +13,13 @@ component=${1}
 # export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 # export BUILD_CHANNEL=$BUILDKITE_BUILD_ID
 
+set -x
+
 hab pkg install core/hab/0.73.0
 
 destination_channel=$BUILDKITE_BUILD_ID
 
-hab_bin_path=$(hab pkg path core/hab)
+hab_bin_path=$(hab pkg path core/hab/0.73.0)
 hab_binary="$hab_bin_path/bin/hab"
 hab_binary_version=$($hab_binary --version)
 
