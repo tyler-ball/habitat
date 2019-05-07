@@ -2,6 +2,8 @@ expeditor:
   defaults:
     buildkite:
       timeout_in_minutes: 30
+    executor:
+      docker:
 
 steps:
 #######################################################################
@@ -11,18 +13,13 @@ steps:
   - label: "[build hab]"
     command:
       - .expeditor/scripts/build_component.sh hab
-    agents:
-      queue: 'default-privileged'
-    plugins:
-      docker#v3.0.1:
-        always-pull: true
-        user: "buildkite-agent"
-        group: "buildkite-agent"
-        image: "chefes/buildkite"
-    env:
-      HAB_ORIGIN: "scotthain"
-      HAB_BLDR_URL: https://bldr.acceptance.habitat.sh
-    timeout_in_minutes: 10
     retry:
       automatic:
         limit: 1
+    expeditor:
+      executor:
+        docker:
+          privileged: true
+          environment:
+            - HAB_ORIGIN=scotthain
+            - HAB_BLDR_URL=https://bldr.acceptance.habitat.sh
