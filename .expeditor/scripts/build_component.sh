@@ -13,8 +13,7 @@ component=${1}
 # export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 # export BUILD_CHANNEL=$BUILDKITE_BUILD_ID
 
-# Let's do this more elegantly, eh?
-curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash
+hab pkg install core/hab
 
 destination_channel=$BUILDKITE_BUILD_ID
 
