@@ -13,7 +13,7 @@ component=${1}
 # export HAB_BLDR_CHANNEL=$BUILDKITE_BUILD_ID
 # export BUILD_CHANNEL=$BUILDKITE_BUILD_ID
 
-hab pkg install core/hab
+hab pkg install core/hab/0.73.0
 
 destination_channel=$BUILDKITE_BUILD_ID
 
