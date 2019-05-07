@@ -1,3 +1,10 @@
+expeditor:
+  defaults:
+    buildkite:
+      timeout_in_minutes: 30
+    executor:
+      docker:
+
 steps:
 #######################################################################
 # Release!
@@ -10,11 +17,11 @@ steps:
       automatic:
         limit: 1
     expeditor:
+      secrets:
+        SCOTTHAIN_HAB_AUTH_TOKEN:
+          account: habitat/chef-ci
+          field: scotthain-sig-key
       executor:
-        secrets:
-          SCOTTHAIN_HAB_AUTH_TOKEN:
-            account: habitat/chef-ci
-            field: scotthain-sig-key
         docker:
           privileged: true
           environment:
