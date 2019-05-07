@@ -18,6 +18,10 @@ steps:
         limit: 1
     expeditor:
       executor:
+        secrets:
+          SCOTTHAIN_HAB_AUTH_TOKEN:
+            account: habitat/chef-ci
+            field: scotthain-sig-key
         docker:
           privileged: true
           environment:
