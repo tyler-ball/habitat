@@ -8,9 +8,9 @@ steps:
 # Release!
 #######################################################################
 
-  - label: "[First step]"
+  - label: "[build hab]"
     command:
-      - echo "HI"
+      - .expeditor/scripts/build_component.sh hab
     agents:
       queue: 'default-privileged'
     plugins:
@@ -19,6 +19,9 @@ steps:
         user: "buildkite-agent"
         group: "buildkite-agent"
         image: "chefes/buildkite"
+    env:
+      HAB_ORIGIN: "scotthain"
+      HAB_BLDR_URL: https://bldr.acceptance.habitat.sh
     timeout_in_minutes: 10
     retry:
       automatic:
