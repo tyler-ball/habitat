@@ -19,7 +19,7 @@ steps:
     expeditor:
       secrets:
         SCOTTHAIN_HAB_AUTH_TOKEN:
-          account: static/habitat/chef-ci
+          path: account/static/habitat/chef-ci
           field: scotthain-sig-key
       executor:
         docker:
