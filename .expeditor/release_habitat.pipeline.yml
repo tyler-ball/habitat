@@ -13,9 +13,9 @@ steps:
   - label: "[build hab]"
     command:
       - .expeditor/scripts/build_component.sh hab
-    retry:
-      automatic:
-        limit: 1
+    # retry:
+    #   automatic:
+    #     limit: 1
     expeditor:
       secrets:
         SCOTTHAIN_HAB_AUTH_TOKEN:
