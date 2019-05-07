@@ -40,5 +40,5 @@ $hab_binary pkg build "components/${component}"
 # components/studio/bin/hab-studio.sh build "components/${component}"
 . results/last_build.env
 
-#  # Always upload to the destination channel.
-# $hab_binary pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $destination_channel "results/$pkg_artifact"
+# Always upload to the destination channel.
+$hab_binary pkg upload --auth $SCOTTHAIN_HAB_AUTH_TOKEN --channel $destination_channel "results/$pkg_artifact"
